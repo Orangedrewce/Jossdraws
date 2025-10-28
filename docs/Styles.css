@@ -5,11 +5,19 @@
 #tab-contact:checked ~ main .tab-contact h2 {
   display: none;
 }
-    /* =============================================================================
-       RESET & BASE STYLES
-       - Minimal reset for consistency across browsers
-       - Base typography and layout foundations
-       ============================================================================= */
+
+header label[for^="tab-"]:hover {
+  background: #e0e0e0;
+  color: #000;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+/* =============================================================================
+   RESET & BASE STYLES
+   - Minimal reset for consistency across browsers
+   - Base typography and layout foundations
+   ============================================================================= */
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
@@ -178,8 +186,7 @@
 
     /* =============================================================================
        BUTTONS
-       - Minimal button styles
-       - Design team will add final colors/styling
+         - Basic button styles
        ============================================================================= */
     .btn {
       display: inline-block;
@@ -206,6 +213,64 @@
 
     .card-content {
       padding: 1rem;
+    }
+
+    /* Image Carousel */
+    .image-carousel {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f5f5;
+    }
+
+    .media-container {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-carousel img,
+    .image-carousel video {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .image-carousel .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid #ccc;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      font-size: 1.5rem;
+      line-height: 30px;
+      text-align: center;
+      cursor: pointer;
+      opacity: 0;
+      z-index: 2;
+      transition: opacity 0.3s, background 0.2s;
+    }
+
+    .image-carousel:hover .arrow {
+      opacity: 0.7;
+    }
+
+    .image-carousel .arrow:hover {
+      opacity: 1 !important;
+      background: #fff;
+    }
+
+    .image-carousel .arrow.left {
+      left: 8px;
+    }
+
+    .image-carousel .arrow.right {
+      right: 8px;
     }
 
     /* =============================================================================
