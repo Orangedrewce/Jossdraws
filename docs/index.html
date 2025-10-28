@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Artist Name Portfolio</title>
+  <title>Artist Name website</title>
   <meta name="description" content="Official site for Artist Name. portfolio, shop, bio, and contact.">
 
 </head>
@@ -29,7 +29,7 @@
   <header>
     <div class="header-container">
       <div class="logo">
-        <a href="#" aria-label="Artist Name Home">Artist Name</a>
+        <a href="#" aria-label="Welcome">Welcome</a>
       </div>
       
       <nav aria-label="Main navigation">
@@ -52,23 +52,29 @@
          - Visible by default (tab-home is checked)
          ============================================================================= -->
     <section class="tab-home hero">
-      <h1>Artist Name</h1>
-      <p>Generic text about work</p>
-      <label for="tab-portfolio" class="btn">View Portfolio</label>
-      <label for="tab-shop" class="btn">Visit Shop</label>
+              <div>
+          <p>For commissions, questions, or comments, <label for="tab-contact" style="text-decoration: underline; cursor: pointer;">get in touch</label>.</p>
+        </div>
+        <div>
+          <img src="https://picsum.photos/1000/400" alt="Featured Artwork">
+        </div>
+
     </section>
 
     <!-- =============================================================================
          PORTFOLIO TAB
          - Grid of artwork with images and captions
          ============================================================================= -->
+    
     <section class="tab-portfolio container">
+            <h1>Artist Name</h1>      
+      <p>Generic text about work</p>
+      <p>More specific information about the artist's work and style.</p>
+      <h3>Gallery</h3>
       <h2>Portfolio</h2>
-      <p>Recent commissions</p>
-      
       <div class="grid grid-3">
         <article class="card">
-          <img src="https://placehold.co/400x300/f5f5f5/999?text=Artwork+1" alt="Artwork 1">
+          <img src="https://picsum.photos/200" alt="Artwork 1">
           <div class="card-content">
             <h3>Title of Work</h3>
             <p>Digital 2025</p>
@@ -76,7 +82,7 @@
         </article>
 
         <article class="card">
-          <img src="https://placehold.co/400x300/f5f5f5/999?text=Artwork+2" alt="Artwork 2">
+          <img src="https://picsum.photos/200" alt="Artwork 2">
           <div class="card-content">
             <h3>Another Piece</h3>
             <p>Book 2025</p>
@@ -84,13 +90,38 @@
         </article>
 
         <article class="card">
-          <img src="https://placehold.co/400x300/f5f5f5/999?text=Artwork+3" alt="Artwork 3">
+          <img src="https://picsum.photos/200" alt="Artwork 3">
           <div class="card-content">
             <h3>Limited Print</h3>
             <p>Volume 2</p>
           </div>
         </article>
       </div>
+
+              <article class="card">
+          <img src="https://picsum.photos/400/300" alt="Artwork 4">
+          <div class="card-content">
+            <h3>Print</h3>
+            <p>Volume 4</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="grid grid-2">
+              <article class="card">
+          <img src="https://picsum.photos/200" alt="Artwork 5">
+          <div class="card-content">
+            <h3>Print</h3>
+            <p>Volume 5</p>
+          </div>
+        </article>
+              <article class="card">
+          <img src="https://picsum.photos/200" alt="Artwork 6">
+          <div class="card-content">
+            <h3>Print</h3>
+            <p>Volume 6</p>
+          </div>
+        </article>
     </section>
 
     <!-- =============================================================================
@@ -101,11 +132,13 @@
       <h2>About</h2>
       
       <div class="grid grid-2">
-        <div>
-          <p><strong>Artist Name</strong> is an artist who works very hard.</p>
-          <p>For commissions, questions, or comments, <label for="tab-contact" style="text-decoration: underline; cursor: pointer;">get in touch</label>.</p>
+          <img src="https://picsum.photos/400/300" alt="Artist Photo">
+          <p>Artist Name is a talented artist specializing in various mediums.</p>
+          <p>With a passion for creativity, they bring unique visions to life through their work.</p>
+
         </div>
-        
+
+
         <aside>
           <ul>
             <li><strong>Based:</strong> City, State</li>
@@ -124,20 +157,36 @@
       
       <div class="grid grid-3">
         <article class="card">
-          <img src="https://picsum.photos/200/300" alt="Product 1">
+          <div class="image-carousel">
+            <button class="arrow left" aria-label="Previous image">&#8592;</button>
+            <div class="media-container">
+              <img src="https://i.etsystatic.com/25958263/r/il/b95b4f/7362253835/il_1140xN.7362253835_4a4u.jpg" 
+                   alt="Coloring Book" 
+                   data-media='["https://i.etsystatic.com/25958263/r/il/b95b4f/7362253835/il_1140xN.7362253835_4a4u.jpg","https://v.etsystatic.com/video/upload/ac_none,du_15,q_auto:good/file_uapxzl.mp4","https://i.etsystatic.com/25958263/r/il/5a2cd7/7362252905/il_794xN.7362252905_7f97.jpg","https://i.etsystatic.com/25958263/r/il/5548ce/7314294768/il_1140xN.7314294768_8z7l.jpg","https://i.etsystatic.com/25958263/r/il/de0543/7362252909/il_1140xN.7362252909_tqib.jpg"]'>
+            </div>
+            <button class="arrow right" aria-label="Next image">&#8594;</button>
+          </div>
           <div class="card-content">
-            <h3>Name of Item</h3>
-            <p>$999</p>
-            <a href="#" class="btn">View</a>
+            <h3>Bugs & Blossoms - Coloring Book</h3>
+            <p>$23.50</p>
+            <a href="https://www.etsy.com/listing/4391097322/bugs-blossoms-coloring-book?ls=r&ref=hp_recent_activity_hub-1&content_source=627a3d5a19e8a34278055934e949124a%253ALTf2d5376319b161db0995188fb5b43e3bc740ef08&logging_key=627a3d5a19e8a34278055934e949124a%3ALTf2d5376319b161db0995188fb5b43e3bc740ef08" class="btn">View</a>
           </div>
         </article>
 
         <article class="card">
-          <img src="https://picsum.photos/200" alt="Product 2">
+          <div class="image-carousel">
+            <button class="arrow left" aria-label="Previous image">&#8592;</button>
+            <div class="media-container">
+              <img src="https://i.etsystatic.com/25958263/r/il/015511/5965017745/il_794xN.5965017745_b06b.jpg" 
+                   alt="Product 2" 
+                   data-media='["https://i.etsystatic.com/25958263/r/il/015511/5965017745/il_794xN.5965017745_b06b.jpg","https://i.etsystatic.com/25958263/r/il/113a9c/5970375331/il_794xN.5970375331_e4vt.jpg","https://i.etsystatic.com/25958263/r/il/422260/5922290370/il_794xN.5922290370_4j19.jpg"]'>
+            </div>
+            <button class="arrow right" aria-label="Next image">&#8594;</button>
+          </div>
           <div class="card-content">
-            <h3>Name of Item</h3>
-            <p>$999</p>
-            <a href="#" class="btn">View</a>
+            <h3>Custom Pet Portrait</h3>
+            <p>$80.00+</p>
+            <a href="https://www.etsy.com/listing/1517173888/custom-pet-portrait?ls=r&sr_prefetch=1&pf_from=shop_home&ref=items-pagination-17&frs=1&content_source=c59c4ad1d85b496a7ff0d34eaebd9c21%253ALT69dd9d99823a2806fec77e12bdb58a50b3190f77&logging_key=c59c4ad1d85b496a7ff0d34eaebd9c21%3ALT69dd9d99823a2806fec77e12bdb58a50b3190f77" class="btn">View</a>
           </div>
         </article>
       </div>
