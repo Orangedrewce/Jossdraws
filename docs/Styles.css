@@ -1,0 +1,287 @@
+    /* =============================================================================
+       RESET & BASE STYLES
+       - Minimal reset for consistency across browsers
+       - Base typography and layout foundations
+       ============================================================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-family: system-ui, -apple-system, sans-serif;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #fff;
+      color: #000;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    /* =============================================================================
+       ACCESSIBILITY
+       - Skip link for keyboard navigation
+       ============================================================================= */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: #000;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      z-index: 200;
+    }
+
+    .skip-link:focus {
+      top: 0;
+    }
+
+    /* =============================================================================
+       HEADER & NAVIGATION
+       - Sticky header with logo and navigation
+       - Tab-based navigation system using radio buttons (CSS-only tabs)
+       ============================================================================= */
+    header {
+      border-bottom: 1px solid #e0e0e0;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 100;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      padding: 0.25rem 0.5rem;
+      transition: border-color 0.2s;
+    }
+
+    nav a:hover {
+      border-bottom-color: #000;
+    }
+
+    /* =============================================================================
+       CSS-ONLY TAB SYSTEM
+       - Uses hidden radio inputs to control which section is visible
+       - Label elements act as clickable tab triggers
+       - :checked pseudo-class shows/hides sections
+       
+       DEVELOPER NOTES:
+       - Each tab needs: 
+         1. A radio input with unique ID (e.g., id="tab-home")
+         2. A label with matching "for" attribute (e.g., for="tab-home")
+         3. A section with class matching tab ID (e.g., class="tab-home")
+       - The radio name must be the same for all tabs (name="tabs")
+       - First tab should have "checked" attribute to show by default
+       ============================================================================= */
+    
+    /* Hide the actual radio inputs */
+    input[type="radio"][name="tabs"] {
+      display: none;
+    }
+
+    /* Hide all sections by default */
+    main > section {
+      display: none;
+    }
+
+    /* Show section when its corresponding tab is checked */
+    #tab-home:checked ~ main .tab-home,
+    #tab-portfolio:checked ~ main .tab-portfolio,
+    #tab-about:checked ~ main .tab-about,
+    #tab-shop:checked ~ main .tab-shop,
+    #tab-contact:checked ~ main .tab-contact {
+      display: block;
+    }
+
+/* Style active tab label */
+#tab-home:checked ~ header label[for="tab-home"],
+#tab-portfolio:checked ~ header label[for="tab-portfolio"],
+#tab-about:checked ~ header label[for="tab-about"],
+#tab-shop:checked ~ header label[for="tab-shop"],
+#tab-contact:checked ~ header label[for="tab-contact"] {
+  border-bottom-color: #000;
+  background: #000;
+  color: #fff;
+  padding: 0.25rem 0.5rem;
+}
+
+    /* =============================================================================
+       LAYOUT UTILITIES
+       - Container for consistent max-width
+       - Grid system for multi-column layouts
+       ============================================================================= */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 2rem;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    /* =============================================================================
+       HERO SECTION
+       - Large introductory section
+       ============================================================================= */
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      margin-bottom: 2rem;
+      color: #666;
+    }
+
+    /* =============================================================================
+       BUTTONS
+       - Minimal button styles
+       - Design team will add final colors/styling
+       ============================================================================= */
+    .btn {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border: 1px solid #000;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn:hover {
+      background: #000;
+      color: #fff;
+    }
+
+    /* =============================================================================
+       CARD COMPONENT
+       - Reusable card for portfolio items and products
+       ============================================================================= */
+    .card {
+      border: 1px solid #e0e0e0;
+    }
+
+    .card-content {
+      padding: 1rem;
+    }
+
+    /* =============================================================================
+       FORMS
+       - Minimal form styling
+       ============================================================================= */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    label {
+      font-weight: 500;
+    }
+
+    input,
+    textarea {
+      padding: 0.5rem;
+      border: 1px solid #e0e0e0;
+      font-family: inherit;
+      width: 100%;
+    }
+
+    button[type="submit"] {
+      align-self: flex-start;
+    }
+
+    .form-message {
+      padding: 1rem;
+      border: 1px solid #000;
+      margin-bottom: 1rem;
+    }
+
+    /* =============================================================================
+       FOOTER
+       ============================================================================= */
+    footer {
+      border-top: 1px solid #e0e0e0;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    footer nav {
+      margin-bottom: 1rem;
+    }
+
+    footer ul {
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* =============================================================================
+       RESPONSIVE ADJUSTMENTS
+       ============================================================================= */
+    @media (max-width: 768px) {
+      .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav ul {
+        width: 100%;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+    }
