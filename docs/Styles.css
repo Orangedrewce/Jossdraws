@@ -1,3 +1,10 @@
+#tab-home:checked ~ main .tab-home h2,
+#tab-portfolio:checked ~ main .tab-portfolio h2,
+#tab-about:checked ~ main .tab-about h2,
+#tab-shop:checked ~ main .tab-shop h2,
+#tab-contact:checked ~ main .tab-contact h2 {
+  display: none;
+}
     /* =============================================================================
        RESET & BASE STYLES
        - Minimal reset for consistency across browsers
@@ -95,21 +102,6 @@
       border-bottom-color: #000;
     }
 
-    /* =============================================================================
-       CSS-ONLY TAB SYSTEM
-       - Uses hidden radio inputs to control which section is visible
-       - Label elements act as clickable tab triggers
-       - :checked pseudo-class shows/hides sections
-       
-       DEVELOPER NOTES:
-       - Each tab needs: 
-         1. A radio input with unique ID (e.g., id="tab-home")
-         2. A label with matching "for" attribute (e.g., for="tab-home")
-         3. A section with class matching tab ID (e.g., class="tab-home")
-       - The radio name must be the same for all tabs (name="tabs")
-       - First tab should have "checked" attribute to show by default
-       ============================================================================= */
-    
     /* Hide the actual radio inputs */
     input[type="radio"][name="tabs"] {
       display: none;
@@ -206,9 +198,11 @@
        CARD COMPONENT
        - Reusable card for portfolio items and products
        ============================================================================= */
-    .card {
-      border: 1px solid #e0e0e0;
-    }
+.card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 
     .card-content {
       padding: 1rem;
