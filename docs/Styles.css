@@ -650,20 +650,64 @@ footer a:focus-visible {
     --font-size-3xl: 2rem;
   }
   
-  .header-container {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--spacing-md);
+  /* Tighter header on mobile */
+  header {
+    padding: var(--spacing-lg) 0;
   }
 
-  nav ul {
-    width: 100%;
+  .header-container {
     flex-direction: column;
+    align-items: center; /* center brand + nav */
     gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  /* Scale logo nicely on small screens */
+  .logo img {
+    height: 56px;
+    width: auto;
+  }
+
+  /* Keep main site nav horizontal and centered on mobile */
+  header nav ul {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+  }
+  
+  /* Ensure pagination stays horizontal and centered */
+  nav[aria-label="Portfolio pagination"] ul.pagination {
+    width: auto;
+    flex-direction: row;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Smaller overlay text on hero for mobile */
+  .hero-overlay-text {
+    font-size: 1.125rem;
+    padding: var(--spacing-sm);
+  }
+  
+  /* Cover the header background on narrow screens to avoid huge header */
+  .header-background {
+    object-fit: cover;
+    height: 100%;
   }
   
   .container {
     padding: var(--spacing-xl) var(--spacing-md);
+  }
+}
+
+/* Make carousel arrows visible on touch devices (no hover) */
+@media (hover: none) {
+  .image-carousel .arrow {
+    opacity: 0.85;
   }
 }
 
