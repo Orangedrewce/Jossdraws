@@ -468,7 +468,10 @@ const CardFocusManager = {
   focusedCard: null,
   
   init() {
-    const cards = DOM.getElements('.card');
+    // Only select cards that are NOT in the shop section
+    const cards = Array.from(DOM.getElements('.card')).filter(card => {
+      return !card.closest('.tab-shop');
+    });
     
     if (cards.length === 0) {
       Logger.log('Card Focus Manager', 'No cards found on page');
