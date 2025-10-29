@@ -5,8 +5,8 @@ const CONFIG = {
   formspreeEndpoint: 'https://formspree.io/f/xeopkjyk',
   messageTimeout: 5000,
   logging: {
-    enabled: true, // Set to false in production
-    verbose: true
+    enabled: false,
+    verbose: false
   }
 };
 
@@ -71,6 +71,7 @@ const TabManager = {
     this.attachListeners();
     this.makeLabelsAccessible();
     this.handleInitialLoad();
+    window.addEventListener('hashchange', () => this.syncToHash());
   },
   
   getTabName(tabId) {
@@ -104,26 +105,48 @@ const TabManager = {
   },
   
   handleInitialLoad() {
-    const hash = window.location.hash.replace('#', '');
-    let initialTabId = 'tab-home'; // Default
-    
-    if (hash) {
-      const targetTab = DOM.getElement(`#tab-${hash}`);
-      if (targetTab) {
-        initialTabId = targetTab.id;
+    if (!this.syncToHash()) {
+      const initialTabId = 'tab-home';
+      const tabToLoad = DOM.getElement(`#${initialTabId}`);
+      if (tabToLoad) {
+        tabToLoad.checked = true;
+      }
+      Logger.log('Initial Tab', {
+        'Tab ID': initialTabId,
+        'Tab Name': this.getTabName(initialTabId).toUpperCase()
+      });
+    }
+  },
+
+  // Sync tab selection to current URL hash.
+  // Supports direct tab names (e.g., #contact) and anchors within sections (e.g., #contact-heading).
+  syncToHash() {
+    const rawHash = window.location.hash.replace('#', '');
+    if (!rawHash) return false;
+
+    // Direct match to tab name
+    const directTab = DOM.getElement(`#tab-${rawHash}`);
+    if (directTab) {
+      directTab.checked = true;
+      return true;
+    }
+
+    // Anchor inside a tab section
+    const target = DOM.getElement(`#${rawHash}`);
+    if (target) {
+      const section = target.closest('section');
+      if (section && section.classList) {
+        const tabClass = Array.from(section.classList).find(c => c.startsWith('tab-'));
+        if (tabClass) {
+          const input = DOM.getElement(`#${tabClass}`);
+          if (input) {
+            input.checked = true;
+            return true;
+          }
+        }
       }
     }
-    
-    // Check the corresponding radio button
-    const tabToLoad = DOM.getElement(`#${initialTabId}`);
-    if (tabToLoad) {
-      tabToLoad.checked = true;
-    }
-    
-    Logger.log('Initial Tab', {
-      'Tab ID': initialTabId,
-      'Tab Name': this.getTabName(initialTabId).toUpperCase()
-    });
+    return false;
   },
   
   makeLabelsAccessible() {
@@ -231,10 +254,21 @@ const FormManager = {
     
     if (response.ok) {
       this.handleSuccess();
-    } else {
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'Form submission failed');
+      return;
     }
+
+    // Graceful fallback: try JSON, then text, then generic
+    let message = 'Form submission failed';
+    try {
+      const data = await response.json();
+      message = data.error || data.message || message;
+    } catch (_) {
+      try {
+        const text = await response.text();
+        if (text) message = text;
+      } catch (_) { /* ignore */ }
+    }
+    throw new Error(message);
   },
   
   handleSuccess() {
