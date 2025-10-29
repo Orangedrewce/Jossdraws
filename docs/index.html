@@ -11,6 +11,13 @@
   <meta property="og:title" content="Joslynn Losee | Artist Portfolio">
   <meta property="og:description" content="View artwork and shop custom creations">
   <meta property="og:type" content="website">
+  <meta property="og:image" content="https://your-domain.example/og-image.jpg">
+  <link rel="canonical" href="https://your-domain.example/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Joslynn Losee | Artist Portfolio">
+  <meta name="twitter:description" content="View artwork and shop custom creations">
+  <meta name="twitter:image" content="https://your-domain.example/og-image.jpg">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
   
   <link rel="stylesheet" href="Styles.css">
 </head>
@@ -19,11 +26,11 @@
   <a href="#main" class="skip-link">Skip to main content</a>
 
   <!-- Tab radio inputs - must come before header for CSS sibling selector -->
-  <input type="radio" name="tabs" id="tab-home" checked aria-label="Home tab">
-  <input type="radio" name="tabs" id="tab-portfolio" aria-label="Portfolio tab">
-  <input type="radio" name="tabs" id="tab-about" aria-label="About tab">
-  <input type="radio" name="tabs" id="tab-shop" aria-label="Shop tab">
-  <input type="radio" name="tabs" id="tab-contact" aria-label="Contact tab">
+  <input type="radio" name="tabs" id="tab-home" checked aria-label="Home tab" hidden aria-hidden="true">
+  <input type="radio" name="tabs" id="tab-portfolio" aria-label="Portfolio tab" hidden aria-hidden="true">
+  <input type="radio" name="tabs" id="tab-about" aria-label="About tab" hidden aria-hidden="true">
+  <input type="radio" name="tabs" id="tab-shop" aria-label="Shop tab" hidden aria-hidden="true">
+  <input type="radio" name="tabs" id="tab-contact" aria-label="Contact tab" hidden aria-hidden="true">
 
   <!-- Header -->
   <header role="banner">
@@ -49,10 +56,10 @@
     <!-- Home Tab -->
     <section class="tab-home hero" aria-labelledby="hero-heading">
       <h2 id="hero-heading" class="sr-only">Welcome</h2>
-      <a href="#contact" class="hero-image-link" onclick="document.getElementById('tab-contact').click(); return false;" aria-label="Contact for commissions">
+      <a href="#contact-heading" class="hero-image-link" onclick="document.getElementById('tab-contact').click();" aria-label="Contact for commissions">
         <img src="https://picsum.photos/1200/400" alt="Featured artwork gallery">
         <div class="hero-overlay-text">
-          <p>Need something designed? <label for="tab-contact" tabindex="0">Get in touch</label></p>
+          <p>Need something designed? Get in touch</p>
         </div>
       </a>
     </section>
@@ -64,10 +71,10 @@
     <h2 id="portfolio-heading">Joslynn Losee</h2>
 <p><em>Creating unique illustrations, pet portraits, and imaginative designs that spread joy to friends globally.</em>-"she thinks everything is sunshine and rainbows"</p>  </div>
 
-  <h2>Portfolio</h2>
+  <h3>Portfolio</h3>
   <div class="grid grid-3">
     <article class="card">
-      <img src="https://lh3.googleusercontent.com/d/1jvPOh9ZWypD589ZoPh78FCgJVl1ulBWx" alt="Digital artwork titled 'test bug'">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1jvPOh9ZWypD589ZoPh78FCgJVl1ulBWx" alt="Digital artwork titled 'test bug'">
       <div class="card-content">
         <h3>Test bug SVG</h3>
         <p>Digital, 2025</p>
@@ -75,7 +82,7 @@
     </article>
 
     <article class="card">
-      <img src="https://lh3.googleusercontent.com/d/1jUzKtsy8HB_0Ehex119GVDwIbYUGhKHB" alt="Shark posing vacation with penny'">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1jUzKtsy8HB_0Ehex119GVDwIbYUGhKHB" alt="Shark posing vacation with penny'">
       <div class="card-content">
         <h3>Test HEIC</h3>
         <p>Vacation, 2025</p>
@@ -83,7 +90,7 @@
     </article>
 
     <article class="card">
-      <img src="https://lh3.googleusercontent.com/d/1C3LYV9kTnzGskdmSec7-BQArZHjhKSoS" alt="Wife and baby puppy jpg">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/1C3LYV9kTnzGskdmSec7-BQArZHjhKSoS" alt="Wife and baby puppy jpg">
       <div class="card-content">
         <h3>Babe and puppy jpg</h3>
         <p>2024</p>
@@ -91,7 +98,7 @@
     </article>
     
     <article class="card">
-      <img src="https://lh3.googleusercontent.com/d/10RIWaWc_1qa13X6K-d_h6kHJTizMJ0i1" alt="Planet png">
+      <img loading="lazy" src="https://lh3.googleusercontent.com/d/10RIWaWc_1qa13X6K-d_h6kHJTizMJ0i1" alt="Planet png">
       <div class="card-content">
         <h3>Planet png</h3>
         <p>20 mins ago</p>
@@ -99,7 +106,7 @@
     </article>
     
     <article class="card">
-      <img src="https://picsum.photos/300/300?random=5" alt="Print artwork Volume 5">
+      <img loading="lazy" src="https://picsum.photos/300/300?random=5" alt="Print artwork Volume 5">
       <div class="card-content">
         <h3>Print</h3>
         <p>Volume 5</p>
@@ -107,7 +114,7 @@
     </article>
     
     <article class="card">
-      <img src="https://picsum.photos/300/300?random=6" alt="Print artwork Volume 6">
+      <img loading="lazy" src="https://picsum.photos/300/300?random=6" alt="Print artwork Volume 6">
       <div class="card-content">
         <h3>Print</h3>
         <p>Volume 6</p>
@@ -115,7 +122,7 @@
     </article>
 
         <article class="card">
-      <img src="https://picsum.photos/300/300?random=6" alt="Print artwork Volume 6">
+  <img loading="lazy" src="https://picsum.photos/300/300?random=6" alt="Print artwork Volume 6">
       <div class="card-content">
         <h3>Print</h3>
         <p>Volume 6</p>
@@ -123,7 +130,7 @@
     </article>
 
         <article class="card">
-      <img src="https://picsum.photos/300/300?random=6" alt="Print artwork Volume 6">
+  <img loading="lazy" src="https://picsum.photos/300/300?random=6" alt="Print artwork Volume 6">
       <div class="card-content">
         <h3>Print</h3>
         <p>Volume 6</p>
@@ -131,7 +138,7 @@
     </article>
 
         <article class="card">
-      <img src="https://picsum.photos/300/300?random=7" alt="Print artwork Volume 7">
+  <img loading="lazy" src="https://picsum.photos/300/300?random=7" alt="Print artwork Volume 7">
       <div class="card-content">
         <h3>Print</h3>
         <p>Volume 7</p>
@@ -139,7 +146,7 @@
     </article>
 
     <article class="card">
-      <img src="https://picsum.photos/300/300?random=8" alt="Print artwork Volume 8">
+  <img loading="lazy" src="https://picsum.photos/300/300?random=8" alt="Print artwork Volume 8">
       <div class="card-content">
         <h3>Print</h3>
         <p>Volume 8</p>
@@ -147,7 +154,7 @@
     </article>
 
     <article class="card">
-      <img src="https://picsum.photos/300/300?random=9" alt="Digital artwork titled 'Creation 9'">
+  <img loading="lazy" src="https://picsum.photos/300/300?random=9" alt="Digital artwork titled 'Creation 9'">
       <div class="card-content">
         <h3>Creation 9</h3>
         <p>Digital, 2025</p>
@@ -155,7 +162,7 @@
     </article>
 
     <article class="card">
-      <img src="https://picsum.photos/300/300?random=10" alt="Print artwork Volume 10">
+  <img loading="lazy" src="https://picsum.photos/300/300?random=10" alt="Print artwork Volume 10">
       <div class="card-content">
         <h3>Print</h3>
         <p>Volume 10</p>
@@ -163,7 +170,7 @@
     </article>
 
     <article class="card">
-      <img src="https://picsum.photos/300/300?random=11" alt="Illustration titled 'Piece 11'">
+  <img loading="lazy" src="https://picsum.photos/300/300?random=11" alt="Illustration titled 'Piece 11'">
       <div class="card-content">
         <h3>Piece 11</h3>
         <p>Illustration, 2025</p>
@@ -171,7 +178,7 @@
     </article>
 
     <article class="card">
-      <img src="https://picsum.photos/300/300?random=12" alt="Print artwork Volume 12">
+  <img loading="lazy" src="https://picsum.photos/300/300?random=12" alt="Print artwork Volume 12">
       <div class="card-content">
         <h3>Print</h3>
         <p>Volume 12</p>
@@ -182,7 +189,11 @@
   <!-- Pagination -->
   <nav aria-label="Portfolio pagination">
     <ul class="pagination">
-      <!-- Pagination will be dynamically generated by JavaScript -->
+      <li><a href="#" aria-label="Previous page" aria-disabled="true">‹</a></li>
+      <li><a href="#" aria-current="page">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#" aria-label="Next page">›</a></li>
     </ul>
   </nav>
 </section>
@@ -201,7 +212,7 @@
         </div>
       </div>
 
-      <h2>Resume</h2>
+      <h3>Resume</h3>
       <div class="resume-container">
         <a href="https://drive.google.com/file/d/1u0ET_C9DZ1yEbNUBjpei4SajegM2gkfw/view?usp=sharing" class="btn" target="_blank" rel="noopener noreferrer">
           View or Download Resume (PDF)
@@ -265,7 +276,6 @@
           </div>
         </article>
       </div>
-
               <article class="card">
           <div class="image-carousel" role="region" aria-label="Product images for Bugs & Blossoms Coloring Book">
             <button class="arrow left" aria-label="Previous image">&#8592;</button>
@@ -282,7 +292,6 @@
             <a href="https://en.wikipedia.org/wiki/HTTP_404" class="btn" target="_blank" rel="noopener noreferrer">View on Etsy</a>
           </div>
         </article>
-
       <div class="grid grid-2">
                 <article class="card">
           <div class="image-carousel" role="region" aria-label="Product images for Bugs & Blossoms Coloring Book">
@@ -320,7 +329,6 @@
       </div>
 
       </div>
-
       
     </section>
 
@@ -354,6 +362,7 @@
       <h3>Let's Make Something!</h3>
       <p>I'd love to hear about your project.<br><strong>Response time:</strong> Is usually within 24 hours</p>
 
+      </div>
       </div>
     </section>
 
