@@ -533,6 +533,26 @@ textarea {
 
 button[type="submit"] {
   align-self: flex-start;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-text);
+  border-radius: var(--border-radius);
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-weight: 600;
+  transition: filter var(--transition-speed), transform var(--transition-speed);
+}
+
+button[type="submit"]:hover {
+  filter: brightness(0.95);
+}
+
+button[type="submit"]:active {
+  transform: translateY(1px);
+}
+
+button[type="submit"]:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
 }
 
 .form-message {
@@ -701,6 +721,11 @@ footer a:focus-visible {
   
   .container {
     padding: var(--spacing-xl) var(--spacing-md);
+  }
+  
+  /* Make the send button easy to tap */
+  button[type="submit"] {
+    width: 100%;
   }
 }
 
