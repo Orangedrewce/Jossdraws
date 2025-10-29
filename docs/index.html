@@ -1,225 +1,283 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Joslynn Losee website</title>
-  <meta name="description" content="Official site for Joslynn Losee. portfolio, shop, bio, and contact.">
-
+  <title>Joslynn Losee | Artist Portfolio & Shop</title>
+  <meta name="description" content="Official portfolio and shop for Joslynn Losee. View artwork, custom pet portraits, coloring books, and more.">
+  
+  <!-- Open Graph / Social Media -->
+  <meta property="og:title" content="Joslynn Losee | Artist Portfolio">
+  <meta property="og:description" content="View artwork and shop custom creations">
+  <meta property="og:type" content="website">
+  
+  <link rel="stylesheet" href="Styles.css">
 </head>
-<style>
-  @import url('Styles.css');
-</style>
 <body>
   <!-- Skip link for accessibility -->
   <a href="#main" class="skip-link">Skip to main content</a>
 
-  <!-- =============================================================================
-       TAB RADIO INPUTS
-       - Must come before header for CSS sibling selector to work
-       - Each input controls visibility of one section
-       ============================================================================= -->
-  <input type="radio" name="tabs" id="tab-home" checked>
-  <input type="radio" name="tabs" id="tab-portfolio">
-  <input type="radio" name="tabs" id="tab-about">
-  <input type="radio" name="tabs" id="tab-shop">
-  <input type="radio" name="tabs" id="tab-contact">
+  <!-- Tab radio inputs - must come before header for CSS sibling selector -->
+  <input type="radio" name="tabs" id="tab-home" checked aria-label="Home tab">
+  <input type="radio" name="tabs" id="tab-portfolio" aria-label="Portfolio tab">
+  <input type="radio" name="tabs" id="tab-about" aria-label="About tab">
+  <input type="radio" name="tabs" id="tab-shop" aria-label="Shop tab">
+  <input type="radio" name="tabs" id="tab-contact" aria-label="Contact tab">
 
   <!-- Header -->
-  <header>
-      <svg class="header-background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 100" preserveAspectRatio="none">
-      <!-- Example: Wave pattern -->
+  <header role="banner">
+    <svg class="header-background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 100" preserveAspectRatio="none" aria-hidden="true">
       <path d="M0,50 Q300,0 600,50 T1200,50 L1200,100 L0,100 Z" fill="#f0f0f0"/>
     </svg>
     <div class="header-container">
-      <div class="logo">
-        <a href="whereverhosted" aria-label="Welcome">Welcome</a>
-        <!--<img src="logo.png" alt="Logo">-->
-      </div>
+      <h1 class="logo">
+        <a href="#" aria-label="Joslynn Losee Home">Joslynn Losee</a>
+      </h1>
       
       <nav aria-label="Main navigation">
         <ul>
-          <li><label for="tab-home">Home</label></li>
-          <li><label for="tab-portfolio">Portfolio</label></li>
-          <li><label for="tab-about">About</label></li>
-          <li><label for="tab-shop">Shop</label></li>
-          <li><label for="tab-contact">Contact</label></li>
+          <li><label for="tab-home" tabindex="0">Home</label></li>
+          <li><label for="tab-portfolio" tabindex="0">Portfolio</label></li>
+          <li><label for="tab-about" tabindex="0">About</label></li>
+          <li><label for="tab-shop" tabindex="0">Shop</label></li>
+          <li><label for="tab-contact" tabindex="0">Contact</label></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <!-- Main content -->
-  <main id="main">
+  <main id="main" role="main">
     
-<!-- =============================================================================
-     HOME TAB
-     - Visible by default (tab-home is checked)
-     ============================================================================= -->
-<section class="tab-home hero">
-  <a href="#" class="hero-image-link" onclick="document.getElementById('tab-contact').click(); return false;">
-    <img src="https://picsum.photos/1000/400" alt="Featured Artwork">
-    <div class="hero-overlay-text">
-      <p>For commissions, questions, or comments, <label for="tab-contact">get in touch</label></p>
-    </div>
-  </a>
-</section>
-
-
-
-    <!-- =============================================================================
-         PORTFOLIO TAB
-         - Grid of artwork with images and captions
-         ============================================================================= -->
-    
-    <section class="tab-portfolio container">
-            <h1>Joslynn Losee</h1>      
-      <p>Generic text about work</p>
-      <p>More specific information about the artist's work and style.</p>
-      <h2>Portfolio</h2>
-      <div class="grid grid-3">
-        <article class="card">
-          <img src="https://picsum.photos/200" alt="Artwork 1">
-          <div class="card-content">
-            <h3>Title of Work</h3>
-            <p>Digital 2025</p>
-          </div>
-        </article>
-
-        <article class="card">
-          <img src="https://picsum.photos/200" alt="Artwork 2">
-          <div class="card-content">
-            <h3>Another Piece</h3>
-            <p>Book 2025</p>
-          </div>
-        </article>
-
-        <article class="card">
-          <img src="https://picsum.photos/200" alt="Artwork 3">
-          <div class="card-content">
-            <h3>Limited Print</h3>
-            <p>Volume 2</p>
-          </div>
-        </article>
-      </div>
-
-              <article class="card">
-          <img src="https://picsum.photos/400/300" alt="Artwork 4">
-          <div class="card-content">
-            <h3>Print</h3>
-            <p>Volume 4</p>
-          </div>
-        </article>
-      </div>
-
-      <div class="grid grid-2">
-              <article class="card">
-          <img src="https://picsum.photos/200" alt="Artwork 5">
-          <div class="card-content">
-            <h3>Print</h3>
-            <p>Volume 5</p>
-          </div>
-        </article>
-              <article class="card">
-          <img src="https://picsum.photos/200" alt="Artwork 6">
-          <div class="card-content">
-            <h3>Print</h3>
-            <p>Volume 6</p>
-          </div>
-        </article>
+    <!-- Home Tab -->
+    <section class="tab-home hero" aria-labelledby="hero-heading">
+      <h2 id="hero-heading" class="sr-only">Welcome</h2>
+      <a href="#contact" class="hero-image-link" onclick="document.getElementById('tab-contact').click(); return false;" aria-label="Contact for commissions">
+        <img src="https://picsum.photos/1200/400" alt="Featured artwork gallery">
+        <div class="hero-overlay-text">
+          <p>Have something in mind? <label for="tab-contact" tabindex="0">Get in touch</label></p>
+        </div>
+      </a>
     </section>
 
-    <!-- =============================================================================
-         ABOUT TAB
-         - Artist bio and details
-         ============================================================================= -->
-    <section class="tab-about container">
-      <h2>About</h2>
+<!-- Portfolio Tab -->
+<section class="tab-portfolio container" aria-labelledby="portfolio-heading">
+
+  <div class="hero">
+    <h2 id="portfolio-heading">Joslynn Losee</h2>
+    <p>Creating organic vibrant works that put a smile on your face.</p>
+    <p>Specializing in custom illustrations, pet portraits, and imaginative designs that bring joy to friends worldwide.</p>
+  </div>
+
+  <h2>Portfolio</h2>
+  <div class="grid grid-3">
+    <article class="card">
+      <img src="https://picsum.photos/300/300?random=1" alt="Digital artwork titled 'Title of Work'">
+      <div class="card-content">
+        <h3>Title of Work</h3>
+        <p>Digital, 2025</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="https://picsum.photos/300/300?random=2" alt="Book illustration titled 'Another Piece'">
+      <div class="card-content">
+        <h3>Another Piece</h3>
+        <p>Book Illustration, 2025</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="https://picsum.photos/300/300?random=3" alt="Limited print artwork Volume 2">
+      <div class="card-content">
+        <h3>Limited Print</h3>
+        <p>Volume 2</p>
+      </div>
+    </article>
+    
+    <article class="card">
+      <img src="https://picsum.photos/300/300?random=4" alt="Print artwork Volume 4">
+      <div class="card-content">
+        <h3>Print</h3>
+        <p>Volume 4</p>
+      </div>
+    </article>
+    
+    <article class="card">
+      <img src="https://picsum.photos/300/300?random=5" alt="Print artwork Volume 5">
+      <div class="card-content">
+        <h3>Print</h3>
+        <p>Volume 5</p>
+      </div>
+    </article>
+    
+    <article class="card">
+      <img src="https://picsum.photos/300/300?random=6" alt="Print artwork Volume 6">
+      <div class="card-content">
+        <h3>Print</h3>
+        <p>Volume 6</p>
+      </div>
+    </article>
+
+        <article class="card">
+      <img src="https://picsum.photos/300/300?random=6" alt="Print artwork Volume 6">
+      <div class="card-content">
+        <h3>Print</h3>
+        <p>Volume 6</p>
+      </div>
+    </article>
+
+        <article class="card">
+      <img src="https://picsum.photos/300/300?random=6" alt="Print artwork Volume 6">
+      <div class="card-content">
+        <h3>Print</h3>
+        <p>Volume 6</p>
+      </div>
+    </article>
+
+        <article class="card">
+      <img src="https://picsum.photos/300/300?random=7" alt="Print artwork Volume 7">
+      <div class="card-content">
+        <h3>Print</h3>
+        <p>Volume 7</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="https://picsum.photos/300/300?random=8" alt="Print artwork Volume 8">
+      <div class="card-content">
+        <h3>Print</h3>
+        <p>Volume 8</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="https://picsum.photos/300/300?random=9" alt="Digital artwork titled 'Creation 9'">
+      <div class="card-content">
+        <h3>Creation 9</h3>
+        <p>Digital, 2025</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="https://picsum.photos/300/300?random=10" alt="Print artwork Volume 10">
+      <div class="card-content">
+        <h3>Print</h3>
+        <p>Volume 10</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="https://picsum.photos/300/300?random=11" alt="Illustration titled 'Piece 11'">
+      <div class="card-content">
+        <h3>Piece 11</h3>
+        <p>Illustration, 2025</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="https://picsum.photos/300/300?random=12" alt="Print artwork Volume 12">
+      <div class="card-content">
+        <h3>Print</h3>
+        <p>Volume 12</p>
+      </div>
+    </article>
+  </div>
+
+  <!-- Pagination -->
+  <nav aria-label="Portfolio pagination">
+    <ul class="pagination">
+      <!-- Pagination will be dynamically generated by JavaScript -->
+    </ul>
+  </nav>
+</section>
+
+    <!-- About Tab -->
+    <section class="tab-about container" aria-labelledby="about-heading">
+      <h2 id="about-heading">About</h2>
       
       <div class="grid grid-2">
-          <img src="https://picsum.photos/400/300" alt="Artist Photo">
-          <p>Artist Name is a talented artist specializing in various mediums.</p>
-          <p>With a passion for creativity, they bring unique visions to life through their work.</p>
+        <img src="https://lh3.googleusercontent.com/d/1Fthpj8lhAq8JT1kSL0TEUPbPGwM3Lw3J" alt="Portrait of artist Joslynn Losee">
+        <div>
+          <p>Joslynn Losee is a multidisciplinary artist specializing in illustration, custom portraiture, and custom design work.</p>
+          <p>With a passion for bringing creativity to life, each piece is crafted with attention to detail and a deep love for artistic expression.</p>
         </div>
+      </div>
 
+      <h2>Resume</h2>
+      <div class="resume-container">
+        <a href="https://drive.google.com/file/d/1u0ET_C9DZ1yEbNUBjpei4SajegM2gkfw/view?usp=sharing" class="btn" target="_blank" rel="noopener noreferrer">
+          View or Download Resume (PDF)
+        </a>
+      </div>
+    </section>
 
-  <h2>Resume</h2>
-  <div class="resume-container">
-    <embed style="width: 100%; height: 100vh;" src="https://docs.google.com/document/d/1ckARW7yJM4Uv8qI80ojLBYfcaIT8rs75EhVREcwJrCM/edit?usp=sharing" alt ="Resume">
-  </div>
-  </section>
-
-    <!-- =============================================================================
-         SHOP TAB
-         - Products grid
-         ============================================================================= -->
-    <section class="tab-shop container">
-      <h2>Shop</h2>
+    <!-- Shop Tab -->
+    <section class="tab-shop container" aria-labelledby="shop-heading">
+      <h2 id="shop-heading">Shop</h2>
       
       <div class="grid grid-3">
         <article class="card">
-          <div class="image-carousel">
+          <div class="image-carousel" role="region" aria-label="Product images for Bugs & Blossoms Coloring Book">
             <button class="arrow left" aria-label="Previous image">&#8592;</button>
             <div class="media-container">
               <img src="https://i.etsystatic.com/25958263/r/il/b95b4f/7362253835/il_1140xN.7362253835_4a4u.jpg" 
-                   alt="Coloring Book" 
+                   alt="Bugs & Blossoms Coloring Book cover" 
                    data-media='["https://i.etsystatic.com/25958263/r/il/b95b4f/7362253835/il_1140xN.7362253835_4a4u.jpg","https://v.etsystatic.com/video/upload/ac_none,du_15,q_auto:good/file_uapxzl.mp4","https://i.etsystatic.com/25958263/r/il/5a2cd7/7362252905/il_794xN.7362252905_7f97.jpg","https://i.etsystatic.com/25958263/r/il/5548ce/7314294768/il_1140xN.7314294768_8z7l.jpg","https://i.etsystatic.com/25958263/r/il/de0543/7362252909/il_1140xN.7362252909_tqib.jpg"]'>
             </div>
             <button class="arrow right" aria-label="Next image">&#8594;</button>
           </div>
           <div class="card-content">
             <h3>Bugs & Blossoms - Coloring Book</h3>
-            <p>$23.50</p>
-            <a href="https://www.etsy.com/listing/4391097322/bugs-blossoms-coloring-book?ls=r&ref=hp_recent_activity_hub-1&content_source=627a3d5a19e8a34278055934e949124a%253ALTf2d5376319b161db0995188fb5b43e3bc740ef08&logging_key=627a3d5a19e8a34278055934e949124a%3ALTf2d5376319b161db0995188fb5b43e3bc740ef08" class="btn" target="_blank" rel="noopener noreferrer">View</a>
+            <p><strong>$23.50</strong></p>
+            <a href="https://www.etsy.com/listing/4391097322/bugs-blossoms-coloring-book" class="btn" target="_blank" rel="noopener noreferrer">View on Etsy</a>
           </div>
         </article>
 
         <article class="card">
-          <div class="image-carousel">
+          <div class="image-carousel" role="region" aria-label="Product images for Custom Pet Portrait">
             <button class="arrow left" aria-label="Previous image">&#8592;</button>
             <div class="media-container">
               <img src="https://i.etsystatic.com/25958263/r/il/015511/5965017745/il_794xN.5965017745_b06b.jpg" 
-                   alt="Custom Pet Portrait" 
-                   data-media='["https://i.etsystatic.com/25958263/r/il/015511/5965017745/il_794xN.5965017745_b06b.jpg","https://i.etsystatic.com/25958263/r/il/113a9c/5970375331/il_794xN.5970375331_e4vt.jpg","https://i.etsystatic.com/25958263/r/il/422260/5922290370/il_794xN.5922290370_4j19.jpg" , "https://i.etsystatic.com/25958263/r/il/02b227/5762088387/il_1140xN.5762088387_lsw8.jpg" , "https://i.etsystatic.com/25958263/r/il/cc43cf/5714027494/il_1140xN.5714027494_cwah.jpg" , "https://i.etsystatic.com/25958263/r/il/dfac4d/5970378481/il_1140xN.5970378481_lmrg.jpg" , "https://i.etsystatic.com/25958263/r/il/098190/5714027910/il_1140xN.5714027910_4y00.jpg" , "https://i.etsystatic.com/25958263/r/il/b6be33/5970377781/il_1140xN.5970377781_scf1.jpg" , "https://i.etsystatic.com/25958263/r/il/c58d78/5762088139/il_1140xN.5762088139_e2zr.jpg"]'>
+                   alt="Custom pet portrait example" 
+                   data-media='["https://i.etsystatic.com/25958263/r/il/015511/5965017745/il_794xN.5965017745_b06b.jpg","https://i.etsystatic.com/25958263/r/il/113a9c/5970375331/il_794xN.5970375331_e4vt.jpg","https://i.etsystatic.com/25958263/r/il/422260/5922290370/il_794xN.5922290370_4j19.jpg","https://i.etsystatic.com/25958263/r/il/02b227/5762088387/il_1140xN.5762088387_lsw8.jpg","https://i.etsystatic.com/25958263/r/il/cc43cf/5714027494/il_1140xN.5714027494_cwah.jpg","https://i.etsystatic.com/25958263/r/il/dfac4d/5970378481/il_1140xN.5970378481_lmrg.jpg","https://i.etsystatic.com/25958263/r/il/098190/5714027910/il_1140xN.5714027910_4y00.jpg","https://i.etsystatic.com/25958263/r/il/b6be33/5970377781/il_1140xN.5970377781_scf1.jpg","https://i.etsystatic.com/25958263/r/il/c58d78/5762088139/il_1140xN.5762088139_e2zr.jpg"]'>
             </div>
             <button class="arrow right" aria-label="Next image">&#8594;</button>
           </div>
           <div class="card-content">
             <h3>Custom Pet Portrait</h3>
-            <p>$80.00+</p>
-            <a href="https://www.etsy.com/listing/1517173888/custom-pet-portrait?ls=r&sr_prefetch=1&pf_from=shop_home&ref=items-pagination-17&frs=1&content_source=c59c4ad1d85b496a7ff0d34eaebd9c21%253ALT69dd9d99823a2806fec77e12bdb58a50b3190f77&logging_key=c59c4ad1d85b496a7ff0d34eaebd9c21%3ALT69dd9d99823a2806fec77e12bdb58a50b3190f77" class="btn" target="_blank" rel="noopener noreferrer">View</a>
+            <p><strong>$80.00+</strong></p>
+            <a href="https://www.etsy.com/listing/1517173888/custom-pet-portrait" class="btn" target="_blank" rel="noopener noreferrer">View on Etsy</a>
           </div>
         </article>
       </div>
     </section>
 
-    <!-- =============================================================================
-         CONTACT TAB
-         - Contact form and social links
-         ============================================================================= -->
-    <section class="tab-contact container">
-      <h2>Contact</h2>
+    <!-- Contact Tab -->
+    <section class="tab-contact container" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Contact</h2>
       
       <div class="grid grid-2">
         <form id="contact-form" action="https://formspree.io/f/xeopkjyk" method="POST">
-          <div id="form-message"></div>
+          <div id="form-message" role="alert" aria-live="polite"></div>
           
           <div>
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required>
+            <label for="name">Name <span aria-hidden="true">*</span></label>
+            <input type="text" id="name" name="name" required aria-required="true">
           </div>
           
           <div>
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
+            <label for="email">Email <span aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" required aria-required="true">
           </div>
           
           <div>
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="5" required></textarea>
+            <label for="message">Message <span aria-hidden="true">*</span></label>
+            <textarea id="message" name="message" rows="5" required aria-required="true"></textarea>
           </div>
           
-          <button type="submit" class="btn">Send</button>
+          <button type="submit" class="btn">Send Message</button>
         </form>
       </div>
     </section>
@@ -227,29 +285,22 @@
   </main>
 
   <!-- Footer -->
-  <footer>
-    <svg class="footer-background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 100" preserveAspectRatio="none">
-      <image href="#" x="0" y="0" width="1200" height="100" preserveAspectRatio="none"/>
+  <footer role="contentinfo">
+    <svg class="footer-background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 100" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,50 Q300,100 600,50 T1200,50 L1200,0 L0,0 Z" fill="#f0f0f0"/>
     </svg>
-    
-    <nav aria-label="Footer navigation">
-      <ul>
-        <li><a href="#">Privacy</a></li>
-        <li><a href="https://media.tenor.com/JX8HD29owIgAAAAM/f-u-middle-finger.gif" target="_blank" rel="noopener noreferrer">Terms</a></li>
-      </ul>
-    </nav>
+  
     
     <nav aria-label="Social media">
       <ul>
-        <li><a href="https://www.etsy.com/shop/JossDrawsLLC?ref=shop-header-name&listing_id=4391097322&from_page=listing" target="_blank" rel="noopener noreferrer">Etsy</a></li>
+        <li><a href="https://www.etsy.com/shop/JossDrawsLLC" target="_blank" rel="noopener noreferrer">Etsy</a></li>
         <li><a href="https://www.instagram.com/joss.draws/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
         <li><a href="https://www.facebook.com/Timeless.Artss" target="_blank" rel="noopener noreferrer">Facebook</a></li>
       </ul>
     </nav>
     
-    <p>&copy; 2025 JossDrawsLLC.</p>
+    <p>&copy; 2025 JossDrawsLLC. All rights reserved. None of this work is authorized to be used in AI-generated content or training.</p>
   </footer>
-
 
 <script src="FormSubmission.js"></script>
 
