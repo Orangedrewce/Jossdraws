@@ -128,6 +128,7 @@ input[type="radio"][name="tabs"] {
 
 main > section {
   display: none;
+  padding: var(--spacing-2xl) var(--spacing-xl);
 }
 
 #tab-home:checked ~ main .tab-home,
@@ -155,6 +156,7 @@ header {
   background: var(--color-bg);
   box-shadow: 0 2px 5px var(--color-shadow);
   padding: var(--spacing-2xl) 0;
+  overflow: hidden;
 }
 
 .header-background {
@@ -162,6 +164,10 @@ header {
   inset: 0;
   z-index: 0;
   pointer-events: none;
+  width: 100%;
+  height: 120%;
+  object-fit: none;
+  object-position: center;
 }
 
 .header-container {
