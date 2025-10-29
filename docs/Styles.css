@@ -12,14 +12,6 @@ header label[for^="tab-"]:hover {
   cursor: pointer;
   transition: background 0.2s;
 }
-.header-svg-bg {
-  width: 100%;
-  overflow: hidden;
-  line-height: 0;
-  position: relative;
-  z-index: 0;
-  margin-bottom: -4px; /* Optional: overlap slightly with main content */
-}
 
 /* =============================================================================
    RESET & BASE STYLES
@@ -81,22 +73,33 @@ header label[for^="tab-"]:hover {
        - Sticky header with logo and navigation
        - Tab-based navigation system using radio buttons (CSS-only tabs)
        ============================================================================= */
-    header {
-      border-bottom: 1px solid #e0e0e0;
-      padding: 1rem 2rem;
-      position: sticky;
-      top: 0;
-      background: #fff;
-      z-index: 100;
-    }
+header {
+  position: relative;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 3rem 0;
+}
 
-    .header-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 2rem;
-      flex-wrap: wrap;
-    }
+.header-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none; /* Allows clicking through the SVG */
+}
+
+.header-container {
+  position: relative;
+  z-index: 1; /* Places content above the SVG */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
     .logo {
       font-weight: 600;
@@ -208,7 +211,7 @@ header label[for^="tab-"]:hover {
   text-align: center;
   color: #fff;
   background: rgba(0, 0, 0, 0.6);
-  padding: 2rem;
+  padding: 1rem;
   border-radius: 8px;
   font-size: 1.5rem;
   font-weight: 600;
@@ -371,10 +374,12 @@ header label[for^="tab-"]:hover {
       margin-bottom: 1rem;
     }
 
+
     /* =============================================================================
        FOOTER
        ============================================================================= */
     footer {
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -384,7 +389,19 @@ header label[for^="tab-"]:hover {
       text-align: center;
     }
 
+    .footer-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
     footer nav {
+      position: relative;
+      z-index: 1;
       display: flex;
       justify-content: center;
     }
@@ -393,6 +410,11 @@ header label[for^="tab-"]:hover {
       display: flex;
       justify-content: center;
       gap: 1rem;
+    }
+
+    footer p {
+      position: relative;
+      z-index: 1;
     }
 
     footer a:hover {
