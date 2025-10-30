@@ -2,7 +2,7 @@
 // CONSTANTS & CONFIGURATION
 // =============================================================================
 const CONFIG = {
-  formspreeEndpoint: 'https://formspree.io/f/xeopkjyk',
+  formspreeEndpoint: 'https://formspree.io/f/mqaglzrb',
   messageTimeout: 5000,
   logging: {
     enabled: false,
