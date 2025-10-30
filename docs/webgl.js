@@ -63,7 +63,7 @@
     float twistPeriod = 6.0;                   // seconds between twists
     float tPhase = floor(T / twistPeriod);     // which interval we're in
     float localT = fract(T / twistPeriod);     // progress in this interval
-    float twistAngle = smoothstep(0.0, 0.5, localT) * 3.14159; // 0→π over half interval
+    float twistAngle = smoothstep(0.0, 0.9, localT) * 3.14159; // 0→π over half interval
 
     // pseudo-random direction (+ or -)
     float randDir = sign(sin(tPhase * 12.345)); 
@@ -73,7 +73,8 @@
     uv *= rot(twistAngle * 0.5);
 
     // --- Color band mapping with AA and no white seams ---
-    float s = (offset + 0.25) / bandThickness;   // continuous band coordinate
+    // Placement of the band in the header
+    float s = (offset + 0.205) / bandThickness;   
 
     // Screen-space AA width using derivatives (fallback constant if unavailable)
     #ifdef GL_OES_standard_derivatives
@@ -85,7 +86,7 @@
     float xi = floor(s);
     float xf = s - xi; // local position within current band [0,1)
 
-    // Determine neighbor colors (clamped at edges so we don't blend to white)
+    //number is stroke width lower number is blended
     int iCenter = int(xi);
     int iLeft   = iCenter - 1;
     int iRight  = iCenter + 1;
@@ -109,15 +110,16 @@
     // to a simulated light source.
     // 'centerFactor' is 1 at the center of the ribbon and 0 at the edges.
     float dEdge = min(xf, 1.0 - xf);
-    float centerFactor = smoothstep(0.0, 0.5, dEdge);
+    //opacity color 
+    float centerFactor = smoothstep(0.0, 10.0, dEdge);
 
-    // Diffuse lighting to create a soft, rounded feel.
-    // It's darker at the edges and brighter at the center.
-    vec3 shaded = bandCol * mix(0.85, 1.0, centerFactor);
+    
+    // 1.125 is the brightness level of the colors.
+    vec3 shaded = bandCol * mix(1.125, 1.0, centerFactor);
 
     // Specular highlight for a "glossy" look.
     // This creates a sharp, bright reflection near the center.
-    float specularPower = 25.0; // Higher value = sharper highlight
+    float specularPower = 50.0; // Higher value = sharper highlight
     float highlight = pow(centerFactor, specularPower);
     shaded = mix(shaded, vec3(1.0), highlight * 0.75); // Mix with white for the highlight
 
