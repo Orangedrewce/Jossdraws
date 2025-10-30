@@ -136,7 +136,19 @@ main > section {
 #tab-about:checked ~ main .tab-about,
 #tab-shop:checked ~ main .tab-shop,
 #tab-contact:checked ~ main .tab-contact {
-  display: block;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Portfolio section specific layout */
+.tab-portfolio {
+  min-height: calc(100vh - 200px);
+  padding: 0;
+}
+
+.tab-portfolio .container {
+  flex: 1;
+  padding: var(--spacing-2xl) var(--spacing-xl);
 }
 
 /* Hide section titles when tab is active */
@@ -165,9 +177,14 @@ header {
   z-index: 0;
   pointer-events: none;
   width: 100%;
-  height: 120%;
-  object-fit: none;
+  height: 100%;
+  object-fit: cover;
   object-position: center;
+}
+
+/* Ensure canvas fills the space properly */
+canvas.header-background {
+  display: block;
 }
 
 .header-container {
@@ -281,6 +298,7 @@ nav label:focus-visible {
   max-width: var(--container-max);
   overflow: hidden;
   margin: 0 auto;
+  border-radius: var(--border-radius);
 }
 
 .hero-image-link img {
@@ -293,6 +311,7 @@ nav label:focus-visible {
 
 .hero-image-link:hover img {
   transform: scale(1.02);
+  border-radius: var(--border-radius);
 }
 
 .hero-image-link:focus-visible {
@@ -315,6 +334,10 @@ nav label:focus-visible {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
   transition: background var(--transition-speed-slow);
   pointer-events: none;
+  max-width: 90%;
+  box-sizing: border-box;
+  word-break: break-word;
+  z-index: 2;
 }
 
 .hero-image-link:hover .hero-overlay-text {
@@ -588,13 +611,15 @@ nav label:focus-visible {
   border-radius: 50%;
   width: 32px;
   height: 32px;
-  font-size: 1.5rem;
-  line-height: 30px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 32px;
   text-align: center;
   cursor: pointer;
   opacity: 0;
   z-index: 2;
   transition: opacity var(--transition-speed-slow), background var(--transition-speed);
+  color: var(--color-text);
 }
 
 .image-carousel:hover .arrow {
@@ -744,6 +769,10 @@ footer p {
   font-size: 0.875rem;
 }
 
+footer .ai-notice {
+  margin-top: 1rem;
+}
+
 footer a:hover {
   text-decoration: underline;
 }
@@ -756,33 +785,51 @@ footer a:focus-visible {
 /* =============================================================================
    PAGINATION
    ============================================================================= */
+.portfolio-pagination-nav {
+  position: sticky;
+  bottom: 0;
+  background: var(--color-bg);
+  padding: var(--spacing-md) 0;
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -2px 8px var(--color-shadow);
+  z-index: 10;
+  margin-top: auto;
+}
+
 .pagination {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: var(--spacing-sm);
-  margin-top: var(--spacing-xl);
+  margin: 0;
 }
 
+.pagination a,
 .pagination-btn {
+  display: inline-block;
   border: 1px solid var(--color-border);
   padding: var(--spacing-xs) var(--spacing-sm);
   min-width: 40px;
   text-align: center;
   transition: all var(--transition-speed);
   border-radius: var(--border-radius);
+  background: var(--color-bg);
+  cursor: pointer;
 }
 
+.pagination a:hover,
 .pagination-btn:hover {
   background: var(--color-hover-bg);
   border-color: var(--color-text);
 }
 
+.pagination a:focus-visible,
 .pagination-btn:focus-visible {
   outline: 2px solid var(--color-text);
   outline-offset: 2px;
 }
 
+.pagination a[aria-current="page"],
 .pagination-btn.active {
   background: var(--color-text);
   color: var(--color-bg);
@@ -790,6 +837,7 @@ footer a:focus-visible {
   font-weight: 600;
 }
 
+.pagination a[aria-disabled="true"],
 .pagination-btn.disabled {
   opacity: 0.5;
   pointer-events: none;
@@ -843,8 +891,17 @@ footer a:focus-visible {
   
   /* Smaller overlay text on hero for mobile */
   .hero-overlay-text {
-    font-size: 1.125rem;
+    font-size: 0.9rem;
     padding: var(--spacing-sm);
+    max-width: 95%;
+    line-height: 1.4;
+    background: rgba(0, 0, 0, 0.75);
+  }
+  
+  /* Ensure hero image has enough height on mobile */
+  .hero-image-link img {
+    min-height: 200px;
+    object-fit: cover;
   }
   
   /* Cover the header background on narrow screens to avoid huge header */
