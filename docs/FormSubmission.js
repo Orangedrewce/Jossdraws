@@ -4,6 +4,12 @@
 const CONFIG = {
   formspreeEndpoint: 'https://formspree.io/f/mqaglzrb',
   messageTimeout: 5000,
+  pagination: {
+    // If true, the grid will auto-scroll into view when changing pages
+    scrollOnChange: false,
+    scrollBehavior: 'smooth',
+    scrollBlock: 'start'
+  },
   logging: {
     enabled: false,
     verbose: false
@@ -644,7 +650,8 @@ const PaginationManager = {
   
   init() {
     this.grid = DOM.getElement('.tab-portfolio .grid-3');
-    this.paginationContainer = DOM.getElement('.pagination');
+    // Scope to portfolio pagination container to avoid clashing with shop pagination
+    this.paginationContainer = DOM.getElement('.portfolio-pagination-nav .pagination');
     
     if (!this.grid || !this.paginationContainer) {
       Logger.log('Pagination Manager', 'Required elements (grid or container) not found');
@@ -679,27 +686,52 @@ const PaginationManager = {
   
   createPaginationButtons() {
     this.paginationContainer.innerHTML = ''; // Clear any existing content
-    
+
+    // Prev arrow
+    const liPrev = document.createElement('li');
+    const prevBtn = document.createElement('button');
+    prevBtn.classList.add('pagination-btn', 'pagination-prev');
+    prevBtn.setAttribute('aria-label', 'Previous page');
+    prevBtn.textContent = '‹';
+    prevBtn.addEventListener('click', () => {
+      if (this.currentPage > 1) this.displayPage(this.currentPage - 1);
+    });
+    liPrev.appendChild(prevBtn);
+    this.paginationContainer.appendChild(liPrev);
+
+    // Page number buttons
     for (let i = 1; i <= this.totalPages; i++) {
       const li = document.createElement('li');
       const button = document.createElement('button');
-      
+
       button.classList.add('pagination-btn');
       button.textContent = i;
       button.setAttribute('aria-label', `Go to page ${i}`);
-      
+
       if (i === 1) {
         button.classList.add('active');
         button.setAttribute('aria-current', 'page');
       }
-      
+
       button.addEventListener('click', () => {
         this.displayPage(i);
       });
-      
+
       li.appendChild(button);
       this.paginationContainer.appendChild(li);
     }
+
+    // Next arrow
+    const liNext = document.createElement('li');
+    const nextBtn = document.createElement('button');
+    nextBtn.classList.add('pagination-btn', 'pagination-next');
+    nextBtn.setAttribute('aria-label', 'Next page');
+    nextBtn.textContent = '›';
+    nextBtn.addEventListener('click', () => {
+      if (this.currentPage < this.totalPages) this.displayPage(this.currentPage + 1);
+    });
+    liNext.appendChild(nextBtn);
+    this.paginationContainer.appendChild(liNext);
   },
   
   displayPage(pageNumber) {
@@ -724,8 +756,10 @@ const PaginationManager = {
     // Update active button state
     this.updateActiveButton();
     
-    // Scroll to the top of the grid
-    this.grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Optional: Scroll to the top of the grid
+    if (CONFIG.pagination?.scrollOnChange && this.grid?.scrollIntoView) {
+      this.grid.scrollIntoView({ behavior: CONFIG.pagination.scrollBehavior, block: CONFIG.pagination.scrollBlock });
+    }
     
     Logger.log('Pagination', {
       'Action': 'Page Change',
@@ -735,14 +769,217 @@ const PaginationManager = {
   },
   
   updateActiveButton() {
-    const buttons = this.paginationContainer.querySelectorAll('.pagination-btn');
-    buttons.forEach((button, index) => {
+    // Numbered buttons exclude prev/next by selecting those without the arrow classes
+    const numberButtons = Array.from(this.paginationContainer.querySelectorAll('.pagination-btn'))
+      .filter(btn => !btn.classList.contains('pagination-prev') && !btn.classList.contains('pagination-next'));
+
+    numberButtons.forEach((button, index) => {
       if ((index + 1) === this.currentPage) {
         button.classList.add('active');
         button.setAttribute('aria-current', 'page');
       } else {
         button.classList.remove('active');
         button.removeAttribute('aria-current');
+      }
+    });
+
+    // Prev/Next disabled state
+    const prevBtn = this.paginationContainer.querySelector('.pagination-prev');
+    const nextBtn = this.paginationContainer.querySelector('.pagination-next');
+    if (prevBtn) {
+      if (this.currentPage === 1) {
+        prevBtn.classList.add('disabled');
+        prevBtn.setAttribute('aria-disabled', 'true');
+      } else {
+        prevBtn.classList.remove('disabled');
+        prevBtn.setAttribute('aria-disabled', 'false');
+      }
+    }
+    if (nextBtn) {
+      if (this.currentPage === this.totalPages) {
+        nextBtn.classList.add('disabled');
+        nextBtn.setAttribute('aria-disabled', 'true');
+      } else {
+        nextBtn.classList.remove('disabled');
+        nextBtn.setAttribute('aria-disabled', 'false');
+      }
+    }
+  }
+};
+
+// =============================================================================
+// SHOP PAGINATION MANAGER
+// =============================================================================
+const ShopPaginationManager = {
+  grid: null,
+  cards: [],
+  paginationContainer: null,
+  sectionLabelsContainer: null,
+  itemsPerPage: 3, // 3 cards per page
+  currentPage: 1,
+  totalPages: 1,
+  sections: ['Best sellers', 'Extra 1', 'Extra 2'],
+  
+  init() {
+    this.grid = DOM.getElement('.tab-shop #shop-grid');
+    this.paginationContainer = DOM.getElement('.shop-pagination-nav .pagination');
+    this.sectionLabelsContainer = DOM.getElement('#shop-section-labels');
+    
+    if (!this.grid || !this.paginationContainer) {
+      Logger.log('Shop Pagination Manager', 'Required elements (grid or container) not found');
+      return;
+    }
+    
+    this.cards = Array.from(this.grid.querySelectorAll('.card'));
+    
+    if (this.cards.length === 0) {
+      Logger.log('Shop Pagination Manager', 'No cards found in grid');
+      return;
+    }
+    
+    this.totalPages = Math.ceil(this.cards.length / this.itemsPerPage);
+    
+    if (this.totalPages <= 1) {
+      Logger.log('Shop Pagination Manager', 'Only one page, no pagination needed');
+      this.paginationContainer.parentElement.style.display = 'none';
+      return;
+    }
+    
+  this.createPaginationButtons();
+    this.displayPage(1);
+    
+    Logger.log('Shop Pagination Manager', {
+      'Status': 'Initialized',
+      'Total Cards': this.cards.length,
+      'Total Pages': this.totalPages,
+      'Items Per Page': this.itemsPerPage
+    });
+  },
+  
+  createPaginationButtons() {
+    // Build unified pagination: Prev, 1..N, Next using .pagination-btn
+    if (!this.paginationContainer) return;
+    this.paginationContainer.innerHTML = '';
+
+    // Prev
+    const liPrev = document.createElement('li');
+    const prevBtn = document.createElement('button');
+    prevBtn.classList.add('pagination-btn', 'pagination-prev');
+    prevBtn.setAttribute('aria-label', 'Previous page');
+    prevBtn.textContent = '‹';
+    prevBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (this.currentPage > 1) this.displayPage(this.currentPage - 1);
+    });
+    liPrev.appendChild(prevBtn);
+    this.paginationContainer.appendChild(liPrev);
+
+    // Numbered
+    for (let i = 1; i <= this.totalPages; i++) {
+      const li = document.createElement('li');
+      const btn = document.createElement('button');
+      btn.classList.add('pagination-btn');
+      btn.textContent = String(i);
+      btn.setAttribute('aria-label', `Go to page ${i}`);
+      if (i === 1) {
+        btn.classList.add('active');
+        btn.setAttribute('aria-current', 'page');
+      }
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.displayPage(i);
+      });
+      li.appendChild(btn);
+      this.paginationContainer.appendChild(li);
+    }
+
+    // Next
+    const liNext = document.createElement('li');
+    const nextBtn = document.createElement('button');
+    nextBtn.classList.add('pagination-btn', 'pagination-next');
+    nextBtn.setAttribute('aria-label', 'Next page');
+    nextBtn.textContent = '›';
+    nextBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (this.currentPage < this.totalPages) this.displayPage(this.currentPage + 1);
+    });
+    liNext.appendChild(nextBtn);
+    this.paginationContainer.appendChild(liNext);
+  },
+  
+  displayPage(pageNumber) {
+    // Validate page number
+    if (pageNumber < 1 || pageNumber > this.totalPages) {
+      return;
+    }
+    
+    this.currentPage = pageNumber;
+    const startIndex = (pageNumber - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    const currentCards = this.cards.slice(startIndex, endIndex);
+    
+    // Hide all cards, show only current page cards
+    this.cards.forEach((card, index) => {
+      card.style.display = index >= startIndex && index < endIndex ? 'flex' : 'none';
+    });
+    
+    // Update section labels based on what's on this page
+    this.updateSectionLabels(currentCards);
+    
+    // Update pagination buttons
+    this.updateActiveButton();
+    
+    // Optional: Scroll to grid
+    if (CONFIG.pagination?.scrollOnChange && this.grid?.scrollIntoView) {
+      this.grid.scrollIntoView({ behavior: CONFIG.pagination.scrollBehavior, block: CONFIG.pagination.scrollBlock });
+    }
+  },
+  
+  updateSectionLabels(cardsOnPage) {
+    if (!this.sectionLabelsContainer) return;
+    
+    // Get unique sections represented on this page
+    const sectionsOnPage = [...new Set(cardsOnPage.map(card => card.getAttribute('data-section')))];
+    
+    // Build labels HTML
+    const labelsHTML = sectionsOnPage.map(section => `<h3>${section}</h3>`).join('');
+    this.sectionLabelsContainer.innerHTML = labelsHTML;
+  },
+  
+  updateActiveButton() {
+    if (!this.paginationContainer) return;
+    // Prev/Next
+    const prevBtn = this.paginationContainer.querySelector('.pagination-prev');
+    const nextBtn = this.paginationContainer.querySelector('.pagination-next');
+    if (prevBtn) {
+      if (this.currentPage === 1) {
+        prevBtn.classList.add('disabled');
+        prevBtn.setAttribute('aria-disabled', 'true');
+      } else {
+        prevBtn.classList.remove('disabled');
+        prevBtn.setAttribute('aria-disabled', 'false');
+      }
+    }
+    if (nextBtn) {
+      if (this.currentPage === this.totalPages) {
+        nextBtn.classList.add('disabled');
+        nextBtn.setAttribute('aria-disabled', 'true');
+      } else {
+        nextBtn.classList.remove('disabled');
+        nextBtn.setAttribute('aria-disabled', 'false');
+      }
+    }
+    // Numbers
+    const numberButtons = Array.from(this.paginationContainer.querySelectorAll('.pagination-btn'))
+      .filter(btn => !btn.classList.contains('pagination-prev') && !btn.classList.contains('pagination-next'));
+    numberButtons.forEach((btn, idx) => {
+      const pageNum = idx + 1;
+      if (pageNum === this.currentPage) {
+        btn.classList.add('active');
+        btn.setAttribute('aria-current', 'page');
+      } else {
+        btn.classList.remove('active');
+        btn.removeAttribute('aria-current');
       }
     });
   }
@@ -778,6 +1015,7 @@ function initializeComponents() {
   CarouselManager.init();
   CardFocusManager.init();
   PaginationManager.init();
+  ShopPaginationManager.init();
   HeroLinkManager.init();
   
   // Optional: Enable click-outside to close
