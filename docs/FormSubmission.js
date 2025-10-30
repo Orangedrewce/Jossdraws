@@ -64,6 +64,31 @@ function initPageLogging() {
 }
 
 // =============================================================================
+// HERO LINK HANDLER (Replaces inline onclick)
+// =============================================================================
+const HeroLinkManager = {
+  init() {
+    const heroLink = DOM.getElement('.hero-image-link[data-tab-target]');
+    if (!heroLink) return;
+    
+    heroLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetTab = heroLink.getAttribute('data-tab-target');
+      const tabInput = DOM.getElement(`#tab-${targetTab}`);
+      
+      if (tabInput) {
+        tabInput.click();
+        
+        Logger.log('Hero Link Clicked', {
+          'Target Tab': targetTab,
+          'Timestamp': new Date().toLocaleTimeString()
+        });
+      }
+    });
+  }
+};
+
+// =============================================================================
 // TAB NAVIGATION
 // =============================================================================
 const TabManager = {
@@ -404,10 +429,12 @@ class Carousel {
     const rightArrow = this.element.querySelector('.arrow.right');
     
     if (leftArrow) {
+      leftArrow.textContent = '<';
       leftArrow.addEventListener('click', () => this.navigate(-1));
     }
     
     if (rightArrow) {
+      rightArrow.textContent = '>';
       rightArrow.addEventListener('click', () => this.navigate(1));
     }
   }
@@ -751,6 +778,7 @@ function initializeComponents() {
   CarouselManager.init();
   CardFocusManager.init();
   PaginationManager.init();
+  HeroLinkManager.init();
   
   // Optional: Enable click-outside to close
   // CardFocusManager.initClickOutside();
