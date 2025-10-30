@@ -62,6 +62,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden; /* prevent horizontal scroll when full-bleed elements are used */
 }
 
 img {
@@ -240,7 +241,7 @@ nav label:hover {
 #tab-about:checked ~ header label[for="tab-about"] {
   border-bottom-color: #fcda06;
   background: #fcda06;
-  color: var(--color-text);
+  color: var(--color-bg);
 }
 
 #tab-shop:checked ~ header label[for="tab-shop"] {
@@ -799,9 +800,11 @@ footer a:focus-visible {
 .pagination {
   display: flex;
   justify-content: center;
+  list-style: none;
   flex-wrap: wrap;
   gap: var(--spacing-sm);
   margin: 0;
+  padding: 0;
 }
 
 .pagination a,
@@ -812,7 +815,7 @@ footer a:focus-visible {
   min-width: 40px;
   text-align: center;
   transition: all var(--transition-speed);
-  border-radius: var(--border-radius);
+  border-radius: 5px; /* consistent rounded edges for pagination */
   background: var(--color-bg);
   cursor: pointer;
 }
@@ -843,6 +846,53 @@ footer a:focus-visible {
   pointer-events: none;
 }
 
+/* Shop Pagination - Unified with Portfolio */
+.shop-pagination-nav {
+  position: sticky;
+  bottom: 0;
+  background: var(--color-bg);
+  padding: var(--spacing-md) 0;
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -2px 8px var(--color-shadow);
+  z-index: 10;
+  margin-top: auto;
+}
+
+/* Make shop pagination full-bleed like portfolio, even though shop section has .container */
+.tab-shop.container .shop-pagination-nav {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  left: 0;
+  right: 0;
+}
+
+/* Remove bottom padding on the shop section so the sticky pagination touches the footer (no visual gap) */
+.tab-shop.container {
+  padding-bottom: 0;
+}
+
+.shop-pagination-nav .pagination {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin: 0;
+}
+
+/* Section labels for shop */
+#shop-section-labels {
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+#shop-section-labels h3 {
+  font-size: 1.25rem;
+  color: var(--color-text);
+  margin: 0;
+  font-weight: 600;
+}
+
 /* =============================================================================
    RESPONSIVE ADJUSTMENTS
    ============================================================================= */
@@ -866,7 +916,8 @@ footer a:focus-visible {
 
   /* Scale logo nicely on small screens */
   .logo img {
-    height: 56px;
+    /* Enlarge logo on mobile while keeping desktop unchanged */
+    height: 100px; /* previously 56px */
     width: auto;
   }
 
