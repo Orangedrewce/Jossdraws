@@ -33,17 +33,17 @@
 
   <!-- Header -->
   <header role="banner">
-    <img class="header-background" src="https://i.etsystatic.com/25958263/r/isbl/43c4ff/68497466/isbl_3360x840.68497466_i7r35wl8.jpg" alt="Joslynn Losee artwork background">
+    <canvas id="shaderCanvas" class="header-background" aria-hidden="true"></canvas>
     <div class="header-container">
       <h1 class="logo"><img src="https://lh3.googleusercontent.com/d/1IH7r0asMV65kuDNsyxpPhjqqz0CZ68-p" width="100" height="100" alt="JossDraws Home"></h1>
       
       <nav aria-label="Main navigation">
         <ul>
-          <li><label for="tab-home" tabindex="0">Home</label></li>
-          <li><label for="tab-portfolio" tabindex="0">Portfolio</label></li>
-          <li><label for="tab-about" tabindex="0">About</label></li>
-          <li><label for="tab-shop" tabindex="0">Shop</label></li>
-          <li><label for="tab-contact" tabindex="0">Contact</label></li>
+          <li><label for="tab-home" tabindex="0"><strong>Home</strong></label></li>
+          <li><label for="tab-portfolio" tabindex="0"><strong>Portfolio</strong></label></li>
+          <li><label for="tab-about" tabindex="0"><strong>About</strong></label></li>
+          <li><label for="tab-shop" tabindex="0"><strong>Shop</strong></label></li>
+          <li><label for="tab-contact" tabindex="0"><strong>Contact</strong></label></li>
         </ul>
       </nav>
     </div>
@@ -55,7 +55,7 @@
     <!-- Home Tab -->
     <section class="tab-home hero" aria-labelledby="hero-heading">
       <h2 id="hero-heading" class="sr-only">Welcome</h2>
-      <a href="#contact-heading" class="hero-image-link" onclick="document.getElementById('tab-contact').click();" aria-label="Contact for commissions">
+      <a href="#contact-heading" class="hero-image-link" data-tab-target="contact" aria-label="Contact for commissions">
         <img src="https://picsum.photos/1200/400" alt="Featured artwork gallery">
         <div class="hero-overlay-text">
           <p>Need something designed?<br>Click to get started.</p>
@@ -64,15 +64,16 @@
     </section>
 
 <!-- Portfolio Tab -->
-<section class="tab-portfolio container" aria-labelledby="portfolio-heading">
+<section class="tab-portfolio" aria-labelledby="portfolio-heading">
 
   <div class="hero">
     <h2 id="portfolio-heading">Joslynn Losee</h2>
 
 </div>
 
-  <h2>Portfolio</h2>
-  <div class="grid grid-3">
+  <div class="container">
+    <h2>Portfolio</h2>
+    <div class="grid grid-3">
     <article class="card">
       <img loading="lazy" src="https://lh3.googleusercontent.com/d/1jvPOh9ZWypD589ZoPh78FCgJVl1ulBWx" alt="Digital artwork titled 'test bug'">
       <div class="card-content">
@@ -185,9 +186,10 @@
       </div>
     </article>
   </div>
+  </div>
 
-  <!-- Pagination -->
-  <nav aria-label="Portfolio pagination">
+  <!-- Pagination - Fixed to bottom -->
+  <nav aria-label="Portfolio pagination" class="portfolio-pagination-nav">
     <ul class="pagination">
       <li><a href="#" aria-label="Previous page" aria-disabled="true">‹</a></li>
       <li><a href="#" aria-current="page">1</a></li>
@@ -344,17 +346,17 @@
           <div id="form-message" role="alert" aria-live="polite"></div>
           
           <div>
-            <label for="name">Name <span aria-hidden="true"></span></label>
+            <label for="name">Name</label>
             <input type="text" id="name" name="name" required aria-required="true">
           </div>
           
           <div>
-            <label for="email">Email <span aria-hidden="true"></span></label>
+            <label for="email">Email</label>
             <input type="email" id="email" name="email" required aria-required="true">
           </div>
           
           <div>
-            <label for="message">Message <span aria-hidden="true"></span></label>
+            <label for="message">Message</label>
             <textarea id="message" name="message" rows="5" required aria-required="true"></textarea>
           </div>
           
@@ -386,10 +388,12 @@
       </ul>
     </nav>
 
-    <p>&copy; 2025 JossDrawsLLC. <br><br><strong>None</strong> of this work is authorized to be used in AI-generated content or training.</p>
+    <p>&copy; 2025 JossDrawsLLC.</p>
+    <p class="ai-notice"><strong>None</strong> of this work is authorized to be used in AI-generated content or training.</p>
   </footer>
 
 <script src="FormSubmission.js"></script>
+<script src="webgl.js"></script>
 
 </body>
 </html>
