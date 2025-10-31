@@ -1,5 +1,9 @@
 // WebGL Shader for Header Background — flat ribbons with 2x SSAA and gamma-correct resolve
 (function() {
+  // ===== ADJUSTABLE SPEED VARIABLE =====
+  const SHADER_SPEED = .750; // left-to-right wave speed (0.1 = slower, 1.0 = faster)
+  // =====================================
+
   const canvas = document.getElementById('shaderCanvas');
   if (!canvas) return;
 
@@ -70,7 +74,7 @@
       vec3 bg = toLinear(vec3(1.0));
 
       // Wave (vertical displacement only; flat ribbons, no twist/pivot)
-      float yWave = sin(uv.x*3.0 + T*1.0)*0.25
+      float yWave = sin(uv.x*3.0 + T)*0.25
                   + sin(uv.x*1.1 - T*0.8)*0.10;
 
       float bandThickness = BASE_THICKNESS;
@@ -314,7 +318,7 @@
     gl.enableVertexAttribArray(scenePosLoc);
     gl.vertexAttribPointer(scenePosLoc, 2, gl.FLOAT, false, 0, 0);
     gl.uniform2f(sceneResLoc, hiW, hiH);
-    gl.uniform1f(sceneTimeLoc, animTime);
+    gl.uniform1f(sceneTimeLoc, animTime * SHADER_SPEED);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
     // PASS 2: resolve to canvas with gamma-correct 2x2 average
