@@ -358,11 +358,11 @@ nav label:focus-visible {
 
 .hero h1 {
   font-size: var(--font-size-3xl);
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
 }
 
 .hero p {
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-sm);
 }
 
 /* =============================================================================
