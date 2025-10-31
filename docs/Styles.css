@@ -168,7 +168,7 @@ header {
   position: relative;
   background: var(--color-bg);
   box-shadow: 0 2px 5px var(--color-shadow);
-  padding: var(--spacing-2xl) 0;
+  padding: var(--spacing-xs) 0;
   overflow: hidden;
 }
 
