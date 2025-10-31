@@ -5,7 +5,7 @@
   
   const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
   if (!gl) {
-    console.warn('WebGL not supported');
+    console.error('WebGL not supported on this browser.');
     return;
   }
 
