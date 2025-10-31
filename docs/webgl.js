@@ -78,9 +78,9 @@
 
     // Screen-space AA width using derivatives (fallback constant if unavailable)
     #ifdef GL_OES_standard_derivatives
-      float aaw = max(fwidth(s) * 1.25, 0.0015);
+      float aaw = max(fwidth(s) * 0.5, 0.001); // Sharper anti-aliasing
     #else
-      float aaw = 0.002; // conservative fallback
+      float aaw = 0.001; // conservative fallback
     #endif
 
     float xi = floor(s);
@@ -184,6 +184,62 @@
   gl.enableVertexAttribArray(positionLocation);
   gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
 
+  // --- Supersampling setup ---
+  const supersampleFactor = 2.0; // Render at 2x resolution
+  let fb, fbTexture;
+
+  // Create a framebuffer to render to
+  function setupFramebuffer() {
+    // If it exists, clean up old versions
+    if (fb) gl.deleteFramebuffer(fb);
+    if (fbTexture) gl.deleteTexture(fbTexture);
+
+    fbTexture = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, fbTexture);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 
+                  canvas.width * supersampleFactor, canvas.height * supersampleFactor, 
+                  0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+
+    fb = gl.createFramebuffer();
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fb);
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, fbTexture, 0);
+
+    // Unbind
+    gl.bindTexture(gl.TEXTURE_2D, null);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+  }
+
+  // --- Second shader for downsampling ---
+  const downsampleVertexShaderSource = `
+    attribute vec2 a_position;
+    varying vec2 v_texCoord;
+    void main() {
+      v_texCoord = a_position * 0.5 + 0.5;
+      gl_Position = vec4(a_position, 0.0, 1.0);
+    }
+  `;
+  const downsampleFragmentShaderSource = `
+    precision mediump float;
+    varying vec2 v_texCoord;
+    uniform sampler2D u_texture;
+    void main() {
+      gl_FragColor = texture2D(u_texture, v_texCoord);
+    }
+  `;
+
+  const downsampleProgram = gl.createProgram();
+  const dsVertexShader = compileShader(downsampleVertexShaderSource, gl.VERTEX_SHADER);
+  const dsFragmentShader = compileShader(downsampleFragmentShaderSource, gl.FRAGMENT_SHADER);
+  gl.attachShader(downsampleProgram, dsVertexShader);
+  gl.attachShader(downsampleProgram, dsFragmentShader);
+  gl.linkProgram(downsampleProgram);
+  const dsPositionLocation = gl.getAttribLocation(downsampleProgram, 'a_position');
+  const dsTextureLocation = gl.getUniformLocation(downsampleProgram, 'u_texture');
+
   // Get uniform locations
   const resolutionLocation = gl.getUniformLocation(program, 'iResolution');
   const timeLocation = gl.getUniformLocation(program, 'iTime');
@@ -216,7 +272,8 @@
     if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
       canvas.width = displayWidth;
       canvas.height = displayHeight;
-      gl.viewport(0, 0, canvas.width, canvas.height);
+      // When canvas resizes, our framebuffer needs to be recreated
+      setupFramebuffer();
     }
   }
 
@@ -237,13 +294,39 @@
     // Advance the shader time with the (smoothed) speed factor
     animTime += dt * currentSpeed;
 
-    gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+    // --- PASS 1: Render high-resolution shader to framebuffer ---
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fb);
+    gl.useProgram(program);
+    gl.viewport(0, 0, canvas.width * supersampleFactor, canvas.height * supersampleFactor);
+    
+    gl.uniform2f(resolutionLocation, canvas.width * supersampleFactor, canvas.height * supersampleFactor);
     gl.uniform1f(timeLocation, animTime);
     
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(positionLocation);
+    
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+
+    // --- PASS 2: Downsample to canvas ---
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    gl.useProgram(downsampleProgram);
+    gl.viewport(0, 0, canvas.width, canvas.height);
+
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, fbTexture);
+    gl.uniform1i(dsTextureLocation, 0);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.vertexAttribPointer(dsPositionLocation, 2, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(dsPositionLocation);
+
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     
     requestAnimationFrame(render);
   }
   
+  // Initial setup
+  setupFramebuffer();
   render();
 })();
