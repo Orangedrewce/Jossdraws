@@ -726,6 +726,13 @@ button[type="submit"]:focus-visible {
    ============================================================================= */
 .tab-about img {
   border-radius: var(--border-radius);
+  box-shadow: 0 2px 8px var(--color-shadow);
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.tab-about img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* =============================================================================
