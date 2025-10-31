@@ -1017,9 +1017,7 @@ function initializeComponents() {
   PaginationManager.init();
   ShopPaginationManager.init();
   HeroLinkManager.init();
-  
-  // Optional: Enable click-outside to close
-  // CardFocusManager.initClickOutside();
+  CardFocusManager.initClickOutside();
   
   Logger.log('Application Initialized', {
     'Status': '✅ All components loaded',
@@ -1042,3 +1040,4 @@ window.addEventListener('unhandledrejection', (event) => {
 // START APPLICATION
 // =============================================================================
 initializeApp();
+
