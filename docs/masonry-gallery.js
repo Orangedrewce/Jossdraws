@@ -576,7 +576,7 @@ const GalleryManager = {
             {
         id: 3,
         type: 'video',
-        video: 'Sluggish Video(1).MOV',
+        video: 'Sluggish Video.MOV',
         loop: true,
         height: 500,
         caption: 'Sluggish',
@@ -652,7 +652,7 @@ const GalleryManager = {
       {
         id: 13,
         type: 'video',
-        video: 'Flower Eyes Video(2)(1).MOV',
+        video: 'Flower Eyes Video.MOV',
         loop: true,
         height: 500,
         caption: 'Flower eyes',
@@ -717,7 +717,7 @@ const GalleryManager = {
                   {
         id: 23,
         type: 'video',
-        video: 'Sewing Machine Case Video(1).MOV',
+        video: 'Sewing Machine Case Video.MOV',
         loop: true,
         height: 500,
         caption: 'Sewing Machine case',
@@ -738,13 +738,7 @@ const GalleryManager = {
         caption: 'Car Portrait',
         url: null
       },
-      {
-       id: 26,
-        img: 'https://lh3.googleusercontent.com/d/1CV8xIyx9HsYcv0DsL3_Dn933OywOdr99',
-        height: 500,
-        caption: 'Gnomed', //
-        url: null
-      },
+
 
       {
         id: 27,
