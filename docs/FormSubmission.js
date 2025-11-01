@@ -11,8 +11,8 @@ const CONFIG = {
     scrollBlock: 'start'
   },
   logging: {
-    enabled: false,
-    verbose: false
+    enabled: true,
+    verbose: true
   }
 };
 
@@ -649,9 +649,9 @@ const PaginationManager = {
   currentPage: 1,
   
   init() {
-    this.grid = DOM.getElement('.tab-portfolio .grid-3');
-    // Scope to portfolio pagination container to avoid clashing with shop pagination
-    this.paginationContainer = DOM.getElement('.portfolio-pagination-nav .pagination');
+    this.grid = DOM.getElement('.tab-gallery .grid-3');
+    // Scope to gallery pagination container to avoid clashing with shop pagination
+    this.paginationContainer = DOM.getElement('.gallery-pagination-nav .pagination');
     
     if (!this.grid || !this.paginationContainer) {
       Logger.log('Pagination Manager', 'Required elements (grid or container) not found');
@@ -1017,6 +1017,8 @@ function initializeComponents() {
   PaginationManager.init();
   ShopPaginationManager.init();
   HeroLinkManager.init();
+  
+  // Optional: Enable click-outside to close
   CardFocusManager.initClickOutside();
   
   Logger.log('Application Initialized', {
@@ -1040,4 +1042,3 @@ window.addEventListener('unhandledrejection', (event) => {
 // START APPLICATION
 // =============================================================================
 initializeApp();
-
