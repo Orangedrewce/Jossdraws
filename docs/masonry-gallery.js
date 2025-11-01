@@ -576,7 +576,7 @@ const GalleryManager = {
             {
         id: 3,
         type: 'video',
-        video: 'Sluggish Video.MOV',
+        video: 'Sluggish Video(1).MOV',
         loop: true,
         height: 500,
         caption: 'Sluggish',
@@ -652,7 +652,7 @@ const GalleryManager = {
       {
         id: 13,
         type: 'video',
-        video: 'Flower Eyes Video.MOV',
+        video: 'Flower Eyes Video(2)(1).MOV',
         loop: true,
         height: 500,
         caption: 'Flower eyes',
@@ -717,7 +717,7 @@ const GalleryManager = {
                   {
         id: 23,
         type: 'video',
-        video: 'Sewing Machine Case Video.MOV',
+        video: 'Sewing Machine Case Video(1).MOV',
         loop: true,
         height: 500,
         caption: 'Sewing Machine case',
