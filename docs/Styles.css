@@ -1043,3 +1043,47 @@ footer a:focus-visible {
 .masonry-item-wrapper.card-focused .masonry-caption {
   opacity: 0;
 }
+
+/* Masonry video styling */
+.masonry-item-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: var(--border-radius);
+  display: block;
+  background: #f9f9f9;
+}
+
+/* Pseudo controls for masonry videos */
+.masonry-video-controls {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: flex;
+  gap: 6px;
+  z-index: 3;
+  opacity: 0.0;
+  transition: opacity var(--transition-speed);
+}
+
+.masonry-item-wrapper:hover .masonry-video-controls,
+.masonry-item-wrapper.card-focused .masonry-video-controls {
+  opacity: 0.95;
+}
+
+.masonry-video-controls .mvc-btn {
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.5);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.masonry-video-controls .mvc-btn:hover,
+.masonry-video-controls .mvc-btn:focus-visible {
+  background: rgba(0,0,0,0.8);
+  outline: none;
+}
