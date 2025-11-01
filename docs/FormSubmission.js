@@ -532,6 +532,17 @@ const PerformanceMonitor = {
 // CARD FOCUS MANAGER
 // =============================================================================
 
+const CardFocusManager = {
+  focusedCard: null,
+  init() {
+    // Lightweight stub to keep initialization chain healthy
+    Logger.log('Card Focus Manager', 'Initialized');
+  },
+  initClickOutside() {
+    // Optional enhancement: close on outside click
+  }
+};
+
 
 
 // =============================================================================
