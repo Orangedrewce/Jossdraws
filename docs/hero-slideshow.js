@@ -31,7 +31,7 @@
       alt: 'Featured Photograph - Flower'
     },
     {
-      src: 'https://drive.google.com/file/d/1km7KmSGPXsjeDRBWW_oznCQGAzsE4vrI/view?usp=sharing',
+      src: 'https://lh3.googleusercontent.com/d/1km7KmSGPXsjeDRBWW_oznCQGAzsE4vrI',
       alt: 'Featured Photograph - Flowers'
     },
   ];
