@@ -283,6 +283,7 @@ nav label:focus-visible {
 
 .grid-3 {
   grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+  
 }
 
 /* =============================================================================
@@ -399,8 +400,10 @@ nav label:focus-visible {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   position: relative;
-  overflow: hidden;
+  overflow: clip;
   border-radius: var(--border-radius);
+  padding: var(--spacing-xs);
+
 }
 
 .card:hover {
@@ -502,7 +505,7 @@ nav label:focus-visible {
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius);
   align-self: start;
-  background: var(--color-bg);
+  background: var(--color-sm);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   transition: all var(--transition-speed);
   padding: 0;
@@ -520,10 +523,9 @@ nav label:focus-visible {
   width: 100%;
   height: auto;
   min-height: 200px;
-  max-height: 350px;
   object-fit: contain;
   background: #f9f9f9;
-  padding: var(--spacing-md);
+  padding: var(--spacing-xs);
   border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
