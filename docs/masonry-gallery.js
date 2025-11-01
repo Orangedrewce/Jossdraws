@@ -461,35 +461,35 @@ const GalleryManager = {
         id: 4,
         img: 'https://lh3.googleusercontent.com/d/15vMGTleAkU0_NtW13JmKOuJYwzvT-xVp',
         height: 850,
-        caption: 'Daisy - digital 2023',
+        caption: 'Daisy - digital 2021',
         url: null
       },
       {
         id: 5,
         img: 'https://lh3.googleusercontent.com/d/1I6LVmJ8YaZGMHRvMBfr5z4m1t7xebRep',
         height: 700,
-        caption: 'Rolling Smoke BBQ (logo) - 2025',
+        caption: 'Rolling Smoke BBQ Logo - 2024',
         url: null
       },
       {
         id: 6,
         img: 'https://lh3.googleusercontent.com/d/1Mzq-4TbJLSUnPplMJjGYItda_-mP9Gvf',
         height: 800,
-        caption: 'La Soldadera Tortillería (logo) - Digital 2024',
+        caption: 'La Soldadera Tortillería Logo - Digital 2024',
         url: null
       },
       {
         id: 7,
         img: 'https://lh3.googleusercontent.com/d/11JNj9fAQN3q2-ZK7uFDG8UorkDl_po6s',
         height: 900,
-        caption: 'Colby Trice (logo) - Digital 2024',
+        caption: 'Colby Trice Logo - Digital 2023',
         url: null
       },
       {
         id: 8,
         img: 'https://lh3.googleusercontent.com/d/1ZmKrnDAOcAog7mpJXdUx9aa0TQfmValf',
         height: 750,
-        caption: 'VLOSH (logo) - Digital 2024',
+        caption: 'VLOSH Logo - Digital 2024',
         url: null
       },
       {
@@ -503,21 +503,21 @@ const GalleryManager = {
         id: 10,
         img: 'https://lh3.googleusercontent.com/d/1ysayoyK-Ql7fh9TzDxz2Q5f0VxK1MkVd',
         height: 800,
-        caption: 'Sluggish - Canvas 2024',
+        caption: 'Sluggish - Canvas 2021',
         url: null
       },
       {
         id: 11,
         img: 'https://lh3.googleusercontent.com/d/1T5oH7rm4XEsqwIwOO8dMQVWi-hJ3Wny6',
         height: 900,
-        caption: 'Boo - Canvas 2023',
+        caption: 'Boo - Canvas 2021',
         url: null
       },
       {
         id: 12,
         img: 'https://lh3.googleusercontent.com/d/120-vRBrePRfIH7WEZd_zW71BbomUuDiA',
         height: 750,
-        caption: 'Cherry Blossoms - Canvas 2023',
+        caption: 'Cherry Blossoms - Canvas 2021',
         url: null
       },
         {
