@@ -23,23 +23,25 @@ class MasonryGallery {
     this.imagesReady = false;
     this.hasMounted = false;
     this.resizeTimeout = null;
-    this.animationFrameId = null;
     // Track focused item for reflowing the grid
     this.focusedItemId = null;
-    // Store natural image dimensions keyed by src
+    // Store natural media dimensions keyed by src
     this.imageMeta = {};
+    // Bound event handler for cleanup
+    this.boundHandleResize = () => this.handleResize();
   }
   
   async init(items) {
     this.items = items;
     
-    // Preload images and capture natural dimensions
-    await this.preloadImages(items.map(i => i.img));
+  // Preload images/videos and capture natural dimensions
+  await this.preloadMedia(items);
     this.imagesReady = true;
 
     // Merge natural dimensions onto items and compute aspect ratios
     this.items = this.items.map(i => {
-      const meta = this.imageMeta[i.img] || {};
+      const src = i.video || i.img;
+      const meta = this.imageMeta[src] || {};
       const naturalWidth = meta.naturalWidth || i.width || 1000;
       const naturalHeight = meta.naturalHeight || i.height || 1000;
       const ratio = naturalHeight / naturalWidth; // h/w
@@ -58,23 +60,40 @@ class MasonryGallery {
     this.animateIn();
     
     // Set up window resize
-    window.addEventListener('resize', () => this.handleResize());
+    window.addEventListener('resize', this.boundHandleResize);
   }
   
-  async preloadImages(urls) {
+  async preloadMedia(items) {
     const meta = {};
     await Promise.all(
-      urls.map(src => new Promise(resolve => {
-        const img = new Image();
-        img.src = src;
-        img.onload = () => {
-          meta[src] = {
-            naturalWidth: img.naturalWidth || img.width,
-            naturalHeight: img.naturalHeight || img.height
+      items.map(item => new Promise(resolve => {
+        const src = item.video || item.img;
+        if (item.type === 'video' || item.video) {
+          const video = document.createElement('video');
+          video.preload = 'metadata';
+          video.src = src;
+          video.addEventListener('loadedmetadata', () => {
+            meta[src] = {
+              naturalWidth: video.videoWidth || 1000,
+              naturalHeight: video.videoHeight || 1000,
+              isVideo: true
+            };
+            resolve();
+          });
+          video.onerror = () => resolve();
+        } else {
+          const img = new Image();
+          img.src = src;
+          img.onload = () => {
+            meta[src] = {
+              naturalWidth: img.naturalWidth || img.width,
+              naturalHeight: img.naturalHeight || img.height,
+              isVideo: false
+            };
+            resolve();
           };
-          resolve();
-        };
-        img.onerror = () => resolve();
+          img.onerror = () => resolve();
+        }
       }))
     );
     this.imageMeta = meta;
@@ -186,19 +205,114 @@ class MasonryGallery {
         z-index: 1;
       `;
       
-      const imgDiv = document.createElement('div');
-      imgDiv.className = 'masonry-item-img';
-      imgDiv.style.cssText = `
-        width: 100%;
-        height: 100%;
-        padding: var(--spacing-xs);
-        background-clip: content-box;
-        background-image: url('${item.img}');
-        background-size: ${item.focused ? 'contain' : 'contain'};
-        background-position: center;
-        background-repeat: no-repeat;
-        position: relative;
-      `;
+      // Media rendering (image or video)
+      let mediaContainer;
+      if (item.type === 'video' || item.video) {
+        mediaContainer = document.createElement('div');
+        mediaContainer.className = 'masonry-item-video';
+        mediaContainer.style.cssText = `
+          width: 100%;
+          height: 100%;
+          padding: var(--spacing-xs);
+          box-sizing: border-box;
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        `;
+        const videoEl = document.createElement('video');
+        videoEl.src = item.video || item.img;
+  // No poster so it starts playing immediately (no thumbnail)
+  // if (item.poster) videoEl.poster = item.poster;
+  videoEl.muted = true;
+        videoEl.playsInline = true;
+        videoEl.setAttribute('playsinline', '');
+        // Loop by default unless explicitly disabled on the item
+        videoEl.loop = item.loop !== false;
+  // Autoplay on load and aggressively buffer first frames
+  videoEl.autoplay = true;
+  videoEl.setAttribute('autoplay', '');
+  videoEl.preload = 'auto';
+        videoEl.style.cssText = `
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          border-radius: var(--border-radius);
+          display: block;
+          background: #f9f9f9;
+        `;
+        mediaContainer.appendChild(videoEl);
+
+        // Pseudo controls (play/pause and mute) overlay
+        const controls = document.createElement('div');
+        controls.className = 'masonry-video-controls';
+        controls.innerHTML = `
+          <button class="mvc-btn mvc-play" aria-label="Pause video" title="Pause">❚❚</button>
+          <button class="mvc-btn mvc-mute" aria-label="Unmute video" title="Unmute">🔇</button>
+        `;
+        mediaContainer.appendChild(controls);
+
+        const playBtn = controls.querySelector('.mvc-play');
+        const muteBtn = controls.querySelector('.mvc-mute');
+
+        const syncControls = () => {
+          if (videoEl.paused) {
+            playBtn.textContent = '▶';
+            playBtn.setAttribute('aria-label', 'Play video');
+            playBtn.title = 'Play';
+          } else {
+            playBtn.textContent = '❚❚';
+            playBtn.setAttribute('aria-label', 'Pause video');
+            playBtn.title = 'Pause';
+          }
+          if (videoEl.muted) {
+            muteBtn.textContent = '🔇';
+            muteBtn.setAttribute('aria-label', 'Unmute video');
+            muteBtn.title = 'Unmute';
+          } else {
+            muteBtn.textContent = '🔊';
+            muteBtn.setAttribute('aria-label', 'Mute video');
+            muteBtn.title = 'Mute';
+          }
+        };
+
+        playBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (videoEl.paused) {
+            videoEl.play().catch(() => {});
+          } else {
+            videoEl.pause();
+          }
+          syncControls();
+        });
+
+        muteBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          videoEl.muted = !videoEl.muted;
+          syncControls();
+        });
+
+        videoEl.addEventListener('play', syncControls);
+        videoEl.addEventListener('pause', syncControls);
+        videoEl.addEventListener('volumechange', syncControls);
+        // Initialize control state
+        syncControls();
+      } else {
+        const imgDiv = document.createElement('div');
+        imgDiv.className = 'masonry-item-img';
+        imgDiv.style.cssText = `
+          width: 100%;
+          height: 100%;
+          padding: var(--spacing-xs);
+          background-clip: content-box;
+          background-image: url('${item.img}');
+          background-size: ${item.focused ? 'contain' : 'contain'};
+          background-position: center;
+          background-repeat: no-repeat;
+          position: relative;
+        `;
+        mediaContainer = imgDiv;
+      }
 
       // Optional caption overlay that fades on hover/focus
       if (item.caption) {
@@ -223,10 +337,11 @@ class MasonryGallery {
           border-radius: 8px;
           transition: opacity 0.3s ease;
         `;
-        imgDiv.appendChild(overlay);
+        // Append overlay to media container if it's the image div; for video, overlay on wrapper is ok too
+        mediaContainer.appendChild(overlay);
       }
       
-      wrapper.appendChild(imgDiv);
+      wrapper.appendChild(mediaContainer);
       
       // Event listeners
       wrapper.addEventListener('click', (e) => {
@@ -339,6 +454,13 @@ class MasonryGallery {
     element.setAttribute('aria-pressed', 'true');
     this.calculateGrid();
     this.updateLayout();
+    // Autoplay videos when focused (muted, inline)
+    if (item.type === 'video' || item.video) {
+      const v = element.querySelector('video');
+      if (v) {
+        try { v.play().catch(() => {}); } catch (_) {}
+      }
+    }
   }
   
   unfocusCard(element) {
@@ -353,7 +475,7 @@ class MasonryGallery {
     // Don't apply hover effects if card is focused
     if (this.focusedCard === element) return;
     
-    const latest = this.grid.find(i => i.id == item.id) || item;
+    const latest = this.grid.find(i => i.id === item.id) || item;
     if (this.options.scaleOnHover && this.focusedItemId !== item.id) {
       element.style.transform = `translate(${latest.x}px, ${latest.y}px) scale(${this.options.hoverScale})`;
     }
@@ -370,7 +492,7 @@ class MasonryGallery {
     // Don't remove hover effects if card is focused
     if (this.focusedCard === element) return;
     
-    const latest = this.grid.find(i => i.id == item.id) || item;
+    const latest = this.grid.find(i => i.id === item.id) || item;
     if (this.options.scaleOnHover && this.focusedItemId !== item.id) {
       element.style.transform = `translate(${latest.x}px, ${latest.y}px) scale(1)`;
     }
@@ -399,7 +521,8 @@ class MasonryGallery {
   
   initClickOutside() {
     document.addEventListener('click', (e) => {
-      if (this.focusedCard && !e.target.closest('.masonry-item-wrapper')) {
+      const insideCard = e.target.closest('.masonry-item-wrapper');
+      if (this.focusedCard && !insideCard) {
         this.unfocusCard(this.focusedCard);
         this.focusedCard = null;
       }
@@ -410,7 +533,7 @@ class MasonryGallery {
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }
-    window.removeEventListener('resize', () => this.handleResize());
+    window.removeEventListener('resize', this.boundHandleResize);
     this.container.innerHTML = '';
     this.focusedCard = null;
   }
@@ -436,39 +559,42 @@ const GalleryManager = {
     
     // Gallery items - add your artwork here
     const items = [
-      {
-        id: 1,
-        img: 'https://lh3.googleusercontent.com/d/1-hBSz08nhnlQgDTa42kC6VmVRu6V0FF2',
-        height: 800,
-        caption: 'Moab - Digital 2025',
+        {
+        id: 5,
+        img: 'https://lh3.googleusercontent.com/d/1I6LVmJ8YaZGMHRvMBfr5z4m1t7xebRep',
+        height: 700,
+        caption: 'Rolling Smoke BBQ Logo - 2024',
         url: null
       },
       {
         id: 2,
         img: 'https://lh3.googleusercontent.com/d/1wHHv0MmFO2hlyp3-ZH0IfmzPMLs-9z-A',
-        height: 900,
+        height: 1000,
         caption: 'Rough Waters - Digital 2025',
         url: null
       },
-      {
+            {
         id: 3,
-        img: 'https://lh3.googleusercontent.com/d/147bGQWKbD8xN-VWBItgqD7zgfBpVBXcU',
-        height: 750,
-        caption: 'Team Work - Digital 2025',
+        type: 'video',
+        video: 'Sluggish Video.MOV',
+        loop: true,
+        height: 500,
+        caption: 'Sluggish',
         url: null
       },
-      {
+        {
         id: 4,
-        img: 'https://lh3.googleusercontent.com/d/15vMGTleAkU0_NtW13JmKOuJYwzvT-xVp',
-        height: 850,
-        caption: 'Daisy - digital 2021',
+        img: 'https://lh3.googleusercontent.com/d/1UowtMnKTaGaAewvtskt0Th7NwyE30m2w',
+        height: 500,
+        caption: 'Frogs & Water Lillies',
         url: null
       },
+      
       {
-        id: 5,
-        img: 'https://lh3.googleusercontent.com/d/1I6LVmJ8YaZGMHRvMBfr5z4m1t7xebRep',
-        height: 700,
-        caption: 'Rolling Smoke BBQ Logo - 2024',
+        id: 1,
+        img: 'https://lh3.googleusercontent.com/d/1-hBSz08nhnlQgDTa42kC6VmVRu6V0FF2',
+        height: 1000,
+        caption: 'Moab - Digital 2025',
         url: null
       },
       {
@@ -480,18 +606,21 @@ const GalleryManager = {
       },
       {
         id: 7,
-        img: 'https://lh3.googleusercontent.com/d/11JNj9fAQN3q2-ZK7uFDG8UorkDl_po6s',
-        height: 900,
-        caption: 'Colby Trice Logo - Digital 2023',
+        img: 'https://lh3.googleusercontent.com/d/1knGdm-AS_SbJWyun2RFBuMdrdpbrZbrc',
+        height: 500,
+        caption: 'Adventures',
         url: null
       },
-      {
+            {
         id: 8,
-        img: 'https://lh3.googleusercontent.com/d/1ZmKrnDAOcAog7mpJXdUx9aa0TQfmValf',
-        height: 750,
-        caption: 'VLOSH Logo - Digital 2024',
+        type: 'video',
+        video: 'Duck Video.MOV',
+        loop: true,
+        height: 500,
+        caption: 'Ducky - Canvas 2022',
         url: null
       },
+
       {
         id: 9,
         img: 'https://lh3.googleusercontent.com/d/1aua1ENqaboyxTNhwwbi0HCgDAKC9DM-G',
@@ -501,9 +630,9 @@ const GalleryManager = {
       },
       {
         id: 10,
-        img: 'https://lh3.googleusercontent.com/d/1ysayoyK-Ql7fh9TzDxz2Q5f0VxK1MkVd',
-        height: 800,
-        caption: 'Sluggish - Canvas 2021',
+        img: 'https://lh3.googleusercontent.com/d/147bGQWKbD8xN-VWBItgqD7zgfBpVBXcU',
+        height: 750,
+        caption: 'Team Work - Digital 2025',
         url: null
       },
       {
@@ -520,13 +649,124 @@ const GalleryManager = {
         caption: 'Cherry Blossoms - Canvas 2021',
         url: null
       },
-        {
+      {
         id: 13,
-        img: '#',
+        type: 'video',
+        video: 'Flower Eyes Video.MOV',
+        loop: true,
         height: 500,
-        caption: 'Blank',
+        caption: 'Flower eyes',
         url: null
-      }
+      },
+      {
+        id: 14,
+        img: 'https://lh3.googleusercontent.com/d/15vMGTleAkU0_NtW13JmKOuJYwzvT-xVp',
+        height: 850,
+        caption: 'Daisy - digital 2021',
+        url: null
+      },
+      {
+        id: 15,
+        img: 'https://lh3.googleusercontent.com/d/1ca10dQkjCibal18uVaTvcg4BVK0EkRLU',
+        height: 500,
+        caption: 'Scooby Doo',
+        url: null
+      },
+      {
+        id: 16,
+        img: 'https://lh3.googleusercontent.com/d/19XP5PbC2tJ0TJBAQicng2F3gnhKaYTd1',
+        height: 500,
+        caption: 'Maternity',
+        url: null
+      },
+      {
+        id: 17,
+        img: 'https://lh3.googleusercontent.com/d/1g_8pbLKU4glncvY0Uo4DchpAM72yu6Uo',
+        height: 500,
+        caption: 'Ghostface',
+        url: null
+      },
+      {
+        id: 18,
+        img: 'https://lh3.googleusercontent.com/d/11JNj9fAQN3q2-ZK7uFDG8UorkDl_po6s',
+        height: 900,
+        caption: 'Colby Trice Logo - Digital 2023',
+        url: null
+      },
+      {
+        id: 20,
+        img: 'https://lh3.googleusercontent.com/d/1RNaGFfGE3oWrdYMfJ58r7jIof2aWqdJi',
+        height: 500,
+        caption: 'Painted Skull',
+        url: null
+      },
+      {
+        id: 21,
+        img: 'https://lh3.googleusercontent.com/d/13DUuv_-UpCmu4c7RMz0oSOlJmiaDrEgk',
+        height: 500,
+        caption: 'Cat Skull Wine Label',
+        url: null
+      },
+      {
+        id: 22,
+        img: 'https://lh3.googleusercontent.com/d/17zjnl-v5zkcGjrO3Hz8GZQMHEMg858vr',
+        height: 500,
+        caption: 'Eyeball sucker wine label',
+        url: null
+      },
+                  {
+        id: 23,
+        type: 'video',
+        video: 'Sewing Machine Case Video.MOV',
+        loop: true,
+        height: 500,
+        caption: 'Sewing Machine case',
+        url: null
+      },
+
+      {
+        id: 24,
+        img: 'https://lh3.googleusercontent.com/d/1KckyqJjziJbk4bW2uh_oD6Zi8AsQ6Jiq',
+        height: 500,
+        caption: 'Mushroom Commission',
+        url: null
+      },
+      {
+        id: 25,
+        img: 'https://lh3.googleusercontent.com/d/1afXRiq9Jvpwcxc286gIxw4Y3sUYaWfjB',
+        height: 500,
+        caption: 'Car Portrait',
+        url: null
+      },
+      {
+       id: 26,
+        img: 'https://lh3.googleusercontent.com/d/1CV8xIyx9HsYcv0DsL3_Dn933OywOdr99',
+        height: 500,
+        caption: 'Gnomed', //
+        url: null
+      },
+
+      {
+        id: 27,
+        img: 'https://lh3.googleusercontent.com/d/1kRxcexcr3p9uXEoNx0nSXPTV7MTPfwFd',
+        height: 500,
+        caption: 'Bison',
+        url: null
+      },
+      {id: 28,
+        img: 'https://lh3.googleusercontent.com/d/1Qm9YemFG8iOG1gXuYWOucpBIPw6f7rrK',
+        height: 500,
+        caption: 'Heart walk 2021',
+        url: null
+      },
+            {
+        id: 29,
+        img: 'https://lh3.googleusercontent.com/d/1ZmKrnDAOcAog7mpJXdUx9aa0TQfmValf',
+        height: 750,
+        caption: 'VLOSH Logo - Digital 2024',
+        url: null
+      },
+
     ];
     
     const options = {
