@@ -17,7 +17,7 @@
     }
   `;
 
-  // Fragment shader (converted from Shadertoy GLSL) — revised look with soft shading and subtle texture
+  // Fragment shader 
   const fragmentShaderSource = `
     precision mediump float;
     #extension GL_OES_standard_derivatives : enable
@@ -30,14 +30,14 @@
     
     // Brand colors
     vec3 home      = vec3(0.004, 0.569, 0.663);
-    vec3 portfolio = vec3(0.482, 0.804, 0.796);
+    vec3 gallery   = vec3(0.482, 0.804, 0.796);
     vec3 about     = vec3(0.988, 0.855, 0.024);
     vec3 shop      = vec3(0.973, 0.561, 0.173);
     vec3 contact   = vec3(0.937, 0.341, 0.553);
     
     vec3 getColor(int i){
         if(i==0)return home;
-        if(i==1)return portfolio;
+        if(i==1)return gallery;
         if(i==2)return about;
         if(i==3)return shop;
         if(i==4)return contact;
