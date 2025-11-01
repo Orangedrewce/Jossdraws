@@ -133,7 +133,7 @@ main > section {
 }
 
 #tab-home:checked ~ main .tab-home,
-#tab-portfolio:checked ~ main .tab-portfolio,
+#tab-gallery:checked ~ main .tab-gallery,
 #tab-about:checked ~ main .tab-about,
 #tab-shop:checked ~ main .tab-shop,
 #tab-contact:checked ~ main .tab-contact {
@@ -141,20 +141,20 @@ main > section {
   flex-direction: column;
 }
 
-/* Portfolio section specific layout */
-.tab-portfolio {
+/* Gallery section specific layout */
+.tab-gallery {
   min-height: calc(100vh - 200px);
   padding: 0;
 }
 
-.tab-portfolio .container {
+.tab-gallery .container {
   flex: 1;
   padding: var(--spacing-2xl) var(--spacing-xl);
 }
 
 /* Hide section titles when tab is active */
 #tab-home:checked ~ main .tab-home h2,
-#tab-portfolio:checked ~ main .tab-portfolio h2,
+#tab-gallery:checked ~ main .tab-gallery h2,
 #tab-about:checked ~ main .tab-about h2,
 #tab-shop:checked ~ main .tab-shop h2,
 #tab-contact:checked ~ main .tab-contact h2 {
@@ -232,7 +232,7 @@ nav label:hover {
   color: var(--color-bg);
 }
 
-#tab-portfolio:checked ~ header label[for="tab-portfolio"] {
+#tab-gallery:checked ~ header label[for="tab-gallery"] {
   border-bottom-color: #89e6e3;
   background: #89e6e3;
   color: var(--color-bg);
@@ -795,7 +795,7 @@ footer a:focus-visible {
 /* =============================================================================
    PAGINATION
    ============================================================================= */
-.portfolio-pagination-nav {
+.gallery-pagination-nav {
   position: sticky;
   bottom: 0;
   background: var(--color-bg);
@@ -855,7 +855,7 @@ footer a:focus-visible {
   pointer-events: none;
 }
 
-/* Shop Pagination - Unified with Portfolio */
+/* Shop Pagination - Unified with Gallery */
 .shop-pagination-nav {
   position: sticky;
   bottom: 0;
@@ -867,7 +867,7 @@ footer a:focus-visible {
   margin-top: auto;
 }
 
-/* Make shop pagination full-bleed like portfolio, even though shop section has .container */
+/* Make shop pagination full-bleed like gallery, even though shop section has .container */
 .tab-shop.container .shop-pagination-nav {
   width: 100vw;
   margin-left: calc(50% - 50vw);
@@ -941,7 +941,7 @@ footer a:focus-visible {
   }
   
   /* Ensure pagination stays horizontal and centered */
-  nav[aria-label="Portfolio pagination"] ul.pagination {
+  nav[aria-label="Gallery pagination"] ul.pagination {
     width: auto;
     flex-direction: row;
     justify-content: center;
