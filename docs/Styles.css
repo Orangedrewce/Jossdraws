@@ -227,32 +227,32 @@ nav label:hover {
 
 /* Active tab styling - Custom colors for each tab */
 #tab-home:checked ~ header label[for="tab-home"] {
-  border-bottom-color: #0191a9;
-  background: #0191a9;
+  border-bottom-color: #04a2bd;
+  background: #04a2bd;
   color: var(--color-bg);
 }
 
 #tab-portfolio:checked ~ header label[for="tab-portfolio"] {
-  border-bottom-color: #7bcdcb;
-  background: #7bcdcb;
+  border-bottom-color: #89e6e3;
+  background: #89e6e3;
   color: var(--color-bg);
 }
 
 #tab-about:checked ~ header label[for="tab-about"] {
-  border-bottom-color: #fcda06;
-  background: #fcda06;
+  border-bottom-color: #fef420;
+  background: #fef420;
   color: var(--color-bg);
 }
 
 #tab-shop:checked ~ header label[for="tab-shop"] {
-  border-bottom-color: #f88f2c;
-  background: #f88f2c;
+  border-bottom-color: #fea035;
+  background: #fea035;
   color: var(--color-bg);
 }
 
 #tab-contact:checked ~ header label[for="tab-contact"] {
-  border-bottom-color: #ef578d;
-  background: #ef578d;
+  border-bottom-color: #ff629e;
+  background: #ff629e;
   color: var(--color-bg);
 }
 
@@ -955,7 +955,6 @@ footer a:focus-visible {
     padding: var(--spacing-sm);
     max-width: 95%;
     line-height: 1.4;
-    background: rgba(0, 0, 0, 0.75);
   }
   
   /* Ensure hero image has enough height on mobile */
