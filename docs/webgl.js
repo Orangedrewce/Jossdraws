@@ -302,6 +302,7 @@
   }
 
   // Animation loop
+  let firstFrameShown = false;
   function render() {
     resize();
     // Real elapsed time since last frame
@@ -330,7 +331,7 @@
     gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(positionLocation);
     
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
     // --- PASS 2: Downsample to canvas ---
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
@@ -347,6 +348,13 @@
     gl.enableVertexAttribArray(dsPositionLocation);
 
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+
+    // Reveal canvas after the first complete frame to avoid flash/artifacts on load
+    if (!firstFrameShown) {
+      firstFrameShown = true;
+      // Use a class so CSS can animate the fade-in
+      canvas.classList.add('is-ready');
+    }
     
     requestAnimationFrame(render);
   }
