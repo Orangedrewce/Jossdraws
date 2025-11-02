@@ -722,7 +722,7 @@ const GalleryManager = {
   height: 500,
   caption: 'Sewing Machine case',
   url: null
-}
+},
 
       {
         id: 24,
@@ -825,6 +825,7 @@ if (document.readyState === 'loading') {
     });
   }
 }
+
 
 
 
