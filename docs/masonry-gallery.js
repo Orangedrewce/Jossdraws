@@ -573,15 +573,16 @@ const GalleryManager = {
         caption: 'Rough Waters - Digital 2025',
         url: null
       },
-            {
-        id: 3,
-        type: 'video',
-        video: 'Sluggish Video.MOV',
-        loop: true,
-        height: 500,
-        caption: 'Sluggish',
-        url: null
-      },
+      // Video item commented out - missing file: Sluggish Video.MOV
+      // {
+      //   id: 3,
+      //   type: 'video',
+      //   video: 'Sluggish Video.MOV',
+      //   loop: true,
+      //   height: 500,
+      //   caption: 'Sluggish',
+      //   url: null
+      // },
         {
         id: 4,
         img: 'https://lh3.googleusercontent.com/d/1UowtMnKTaGaAewvtskt0Th7NwyE30m2w',
@@ -611,15 +612,16 @@ const GalleryManager = {
         caption: 'Adventures',
         url: null
       },
-            {
-        id: 8,
-        type: 'video',
-        video: 'Duck Video.MOV',
-        loop: true,
-        height: 500,
-        caption: 'Ducky - Canvas 2022',
-        url: null
-      },
+      // Video item commented out - missing file: Duck Video.MOV
+      // {
+      //   id: 8,
+      //   type: 'video',
+      //   video: 'Duck Video.MOV',
+      //   loop: true,
+      //   height: 500,
+      //   caption: 'Ducky - Canvas 2022',
+      //   url: null
+      // },
 
       {
         id: 9,
@@ -649,15 +651,16 @@ const GalleryManager = {
         caption: 'Cherry Blossoms - Canvas 2021',
         url: null
       },
-      {
-        id: 13,
-        type: 'video',
-        video: 'Flower Eyes Video.MOV',
-        loop: true,
-        height: 500,
-        caption: 'Flower eyes',
-        url: null
-      },
+      // Video item commented out - missing file: Flower Eyes Video.MOV
+      // {
+      //   id: 13,
+      //   type: 'video',
+      //   video: 'Flower Eyes Video.MOV',
+      //   loop: true,
+      //   height: 500,
+      //   caption: 'Flower eyes',
+      //   url: null
+      // },
       {
         id: 14,
         img: 'https://lh3.googleusercontent.com/d/15vMGTleAkU0_NtW13JmKOuJYwzvT-xVp',
