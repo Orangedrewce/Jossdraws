@@ -575,9 +575,7 @@ const GalleryManager = {
       },
             {
         id: 3,
-        type: 'video',
-        video: 'Sluggish Video.MOV',
-        loop: true,
+        img: 'Sluggish Video.gif',
         height: 500,
         caption: 'Sluggish',
         url: null
@@ -613,9 +611,7 @@ const GalleryManager = {
       },
             {
         id: 8,
-        type: 'video',
-        video: 'Duck Video.MOV',
-        loop: true,
+        img: 'Duck Video.gif',
         height: 500,
         caption: 'Ducky - Canvas 2022',
         url: null
@@ -651,9 +647,7 @@ const GalleryManager = {
       },
       {
         id: 13,
-        type: 'video',
-        video: 'Flower Eyes Video.MOV',
-        loop: true,
+        img: 'Flower Eyes Video.gif',
         height: 500,
         caption: 'Flower eyes',
         url: null
@@ -714,12 +708,11 @@ const GalleryManager = {
         caption: 'Eyeball sucker wine label',
         url: null
       },
-
-        {
+      {
         id: 23,
-        img: 'https://lh3.googleusercontent.com/d/1Qlp6X6BHcUaV0geS-EKpLVaeQoKwmpUZ',
+        img: 'Sewing Machine Case Video.gif',
         height: 500,
-        caption: 'Sewing Machine case',
+        caption: 'Sewing Machine Case',
         url: null
       },
 
