@@ -714,15 +714,15 @@ const GalleryManager = {
         caption: 'Eyeball sucker wine label',
         url: null
       },
-{
-  id: 23,
-  type: 'video',
-  video: 'https://raw.githubusercontent.com/Orangedrewce/Jossdraws/main/docs/Sewing%20Machine%20Case%20Video.MOV',
-  loop: true,
-  height: 500,
-  caption: 'Sewing Machine case',
-  url: null
-},
+                  {
+        id: 23,
+        type: 'video',
+        video: 'Sewing Machine Case Video.MOV',
+        loop: true,
+        height: 500,
+        caption: 'Sewing Machine case',
+        url: null
+      },
 
       {
         id: 24,
@@ -825,9 +825,6 @@ if (document.readyState === 'loading') {
     });
   }
 }
-
-
-
 
 
 
