@@ -11,8 +11,8 @@ const CONFIG = {
     scrollBlock: 'start'
   },
   logging: {
-    enabled: true,
-    verbose: true
+    enabled: false,
+    verbose: false
   }
 };
 
